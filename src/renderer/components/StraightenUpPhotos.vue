@@ -1,39 +1,20 @@
 <template>
   <div>
-    <b-navbar type="primary" variant="info" class="center">
-      <b-nav-text tag="h2">
-        Photo
-      </b-nav-text>
-    </b-navbar>
+    <Navbar />
     <b-container fluid>
       <b-row class="maxHeight">
         <b-col cols="2">
-          left
+          <SidebarLeft />
         </b-col>
         <b-col>
-          middle
-          <div v-html="folder"></div>
+          <PhotoZone />
         </b-col>
         <b-col cols="4">
-          <b-row>
-            <b-col>
-              <!-- <b-form-file
-                webkitdirectory
-              /> -->
-            </b-col>
-            <b-col>
-              <button @click="hanldeClickNewDir">가족</button>
-            </b-col>
-          </b-row>
-          <div>
-            
-          </div>
+          <SidebarRight />
         </b-col>
       </b-row>
     </b-container>
     
-
-
     <!-- VueX 테스트 -->
     <!-- <div>
       <h2>Test</h2>
@@ -50,15 +31,19 @@
 </template>
 
 <script>
-/* eslint-disable */
-const { dialog } = require('electron').remote
-import fs from 'fs'
-import _ from 'lodash'
-// const _ = 'lodash'
+import Navbar from '@/components/Navbar'
+import SidebarLeft from '@/components/SidebarLeft'
+import SidebarRight from '@/components/SidebarRight'
+import PhotoZone from '@/components/PhotoZone'
 
 export default {
   name: 'StraightenUpPhotos',
-  components: { },
+  components: {
+    Navbar,
+    SidebarLeft,
+    SidebarRight,
+    PhotoZone
+  },
   computed: {
     getMy() {
       return this.$store.getters.my
@@ -66,8 +51,7 @@ export default {
   },
   data() {
     return {
-      folder: 'empty',
-      folders: []
+      
     }
   },
   methods: {
@@ -75,45 +59,10 @@ export default {
       // this.$store.Counter.dispatch('someAsyncTask')
       console.dir(this.$store)
       this.$store.dispatch('increMain', {})
-    },
-    hanldeClickNewDir() {
-      console.log('handleClickNewDir')
-      let path = dialog.showOpenDialog({
-        properties: ['openDirectory']
-      })
-
-      console.log(path)
-      this.folder = fs.readdirSync(path[0])
-      console.log(this.folder.length)
-      console.log(this.folder[3])
-      
-      _.forEach(this.folder, (fo) => {
-        console.log(path[0] + '\\' + fo)
-      })
-
-
-      fs.readdir(path[0], function(err, files) {
-        if(err) {
-          console.error(err)
-        }
-        console.log(files.length)
-        console.log(files[2])
-        
-      })
     }
   }
 }
 </script>
 
 <style scoped>
-  body {
-    /* padding: 10%; */
-  }
-  .center {
-    /* display: flex; */
-    justify-content: center;
-  }
-  .maxHeight {
-    height: 100%;
-  }
 </style>
