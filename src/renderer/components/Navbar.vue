@@ -10,8 +10,7 @@
                 <!-- TODO: 아이콘 넣어서 선택전, 선택후 구분하기 -->
               </b-button>
               <div>
-                {{ sourceFolderPath }} <br/>
-                {{ currentImagePath }}
+                <span v-html="sourceFolderPath" class="pathView" />
               </div>
             </div>
           </b-col>
@@ -93,5 +92,8 @@ export default {
 .center {
   color: blue;
   justify-content: space-between;
+}
+.pathView {
+  font-size: 0.7rem;
 }
 </style>
