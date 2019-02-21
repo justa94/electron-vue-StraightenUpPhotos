@@ -1,9 +1,10 @@
 /* eslint-disable */
+// TODO: Folder를 Directory로 바꿀까?
 const state = {
   currentImagePath: '', // 현재 이미지파일 경로
   imageNames: [], // 이미지 경로들
   sourceFolderPath: '', // 정리 대상 폴더
-  destFolers: [], // 이동하게될 목적 폴더들
+  destFolders: [], // 이동하게될 목적 폴더들
   numberOfFiles_origin: 0, // 이미지 파일 갯수 (전체)
   numberOfFiles_complete: 0 // 처리된 이미지 파일 갯수
 }
@@ -12,7 +13,7 @@ const getters = {
   currentImagePath: () => state.currentImagePath,
   imageNames: () => state.imageNames,
   sourceFolderPath: () => state.sourceFolderPath,
-  destFolers: () => state.destFolers,
+  destFolders: () => state.destFolders,
   numberOfFiles_origin: () => state.numberOfFiles_origin,
   numberOfFiles_complete: () => state.numberOfFiles_complete,  
 }
@@ -28,9 +29,9 @@ const actions = {
   setSourceFolderPath({ commit }, payload) {
     state.sourceFolderPath = payload
   },
-  setDestFolers({ commit }, payload) {
+  addDestFolders({ commit }, payload) {
     // state.destFolers = payload
-    state.destFolers.push(payload)
+    state.destFolders.push(payload)
   },
   setNumberOfFiles_origin({ commit }, payload) {
     state.numberOfFiles_origin = payload

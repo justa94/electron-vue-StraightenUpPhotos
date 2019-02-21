@@ -8,6 +8,13 @@
         </div>
       </b-col>
     </b-row>
+    <b-row v-for="destFolder in destFolders">
+      <div>
+          <b-button variant="primary" v-html="destFolder.dirName" />
+          <span v-html="destFolder.dirPath" class="pathView" />
+          <!-- TODO: icon으로 수정, 삭제 버튼 만들기 -->
+        </div>
+    </b-row>
     <b-row>
       <b-col>
         <b-button @click="hanldeClickNewDir" variant="secondary" size="sm">경로 추가</b-button>
@@ -16,6 +23,7 @@
     <b-row>
       <b-col>
         <div>currentImagePath: {{ currentImagePath }}</div>
+        <div>destFolders: {{ destFolders }}</div>
       </b-col>
     </b-row>
   </div>
@@ -28,13 +36,17 @@ const { dialog } = require('electron').remote
 import fs from 'fs'
 import path from 'path'
 import _ from 'lodash'
+import { setTimeout } from 'timers';
 // const _ = 'lodash'
 
 export default {
   name: 'SidebarRight',
   components: { },
   computed: {
-    ...mapGetters(['currentImagePath'])
+    ...mapGetters([
+      'currentImagePath',
+      'destFolders'
+    ])
   },
   data() {
     return {
@@ -42,7 +54,8 @@ export default {
   },
   methods: {
     ...mapActions([
-      'setCurrentImagePath'
+      'setCurrentImagePath',
+      'addDestFolders'
     ]),
     test() {
       const apath = dialog.showOpenDialog({
@@ -94,7 +107,13 @@ export default {
       const dirName = path.basename(dirPath)
       console.log('dirName', dirName)
 
-      
+      // TODO: 폴더경로 중복검사
+      this.addDestFolders({dirPath, dirName})
+
+
+      setTimeout(() => {
+        console.dir(this.destFolders)
+      }, 1000)
     }
   }
 }
