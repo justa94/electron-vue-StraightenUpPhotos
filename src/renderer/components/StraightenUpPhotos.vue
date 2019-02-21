@@ -5,6 +5,16 @@
         Photo
       </b-nav-text>
     </b-navbar>
+    <b-container fluid>
+      <b-row>
+        <b-col>
+          left
+        </b-col>
+        <b-col>
+          right
+        </b-col>
+      </b-row>
+    </b-container>
     <div>
       <b-button>Button</b-button>
       <b-button variant="danger">Button</b-button>
