@@ -6,7 +6,8 @@ const state = {
   sourceFolderPath: '', // 정리 대상 폴더
   destFolders: [], // 이동하게될 목적 폴더들
   numberOfFiles_origin: 0, // 이미지 파일 갯수 (전체)
-  numberOfFiles_complete: 0 // 처리된 이미지 파일 갯수
+  numberOfFiles_complete: 0, // 처리된 이미지 파일 갯수
+  currentIndex: 0, // 현재 배열 인덱스
 }
 
 const getters = {
@@ -15,7 +16,8 @@ const getters = {
   sourceFolderPath: () => state.sourceFolderPath,
   destFolders: () => state.destFolders,
   numberOfFiles_origin: () => state.numberOfFiles_origin,
-  numberOfFiles_complete: () => state.numberOfFiles_complete,  
+  numberOfFiles_complete: () => state.numberOfFiles_complete,
+  currentIndex: () => state.currentIndex,
 }
 
 const actions = {
@@ -23,8 +25,8 @@ const actions = {
     state.currentImagePath = payload
   },
   setImageNames({ commit }, payload) {
-    // state.imageNames = payload
-    state.imageNames.push(payload)
+    state.imageNames = payload
+    // state.imageNames.push(payload)
   },
   setSourceFolderPath({ commit }, payload) {
     state.sourceFolderPath = payload
@@ -38,6 +40,9 @@ const actions = {
   },
   setNumberOfFiles_complete({ commit }, payload) {
     state.numberOfFiles_complete = payload
+  },
+  setCurrentIndex({ commit }, payload) {
+    state.currentIndex = payload
   },
 }
 

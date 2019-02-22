@@ -2,16 +2,16 @@
   <div class="photoZone">
     PhotoZone
     <div class="imgContainer">
-      <!-- TODO: src폴더 선택 전에는 빈 이미지 띄워놓기 -->
+      <!-- TODO: src폴더 선택 전에는 빈 이미지 띄워놓기 -> 좀더 오류없게끔 처리 다시하기 -->
       <img v-if="currentImagePath.indexOf('placeholder') !== -1" :src="currentImagePath" />
-      <img v-else :src="sourceFolderPath + '\\' + currentImagePath" />
+      <img v-else :src="sourceFolderPath + '\\' + imageNames[currentIndex]" />
       <!-- <img src="C:\Users\user\Downloads\10000img\img\rimg4aea56.jpg" /> -->
     </div>
     <footer style="text-align: center">
-      <b-button class="imageBack">
+      <b-button @click="imageBack" class="imageBack">
         <--
       </b-button>
-      <b-button>
+      <b-button @click="imageFront">
         -->
       </b-button>
       <!-- i
@@ -27,13 +27,17 @@
 /* eslint-disable */
 import { mapGetters, mapActions } from 'vuex'
 import { setTimeout } from 'timers';
+import _ from 'lodash'
+
 export default {
   name: 'PhotoZone',
   components: { },
   computed: {
     ...mapGetters([
       'currentImagePath',
-      'sourceFolderPath'
+      'sourceFolderPath',
+      'imageNames',
+      'currentIndex',
     ])
   },
   data() {
@@ -43,11 +47,30 @@ export default {
   },
   mounted() {
     console.log('PhotoZone Mounted')
+    
   },
   methods: {
     ...mapActions([
-      'setCurrentImagePath'
-    ])
+      'setCurrentImagePath',
+      'setCurrentIndex'
+    ]),
+    imageBack() {
+      console.log('imageNames', this.imageNames[3])
+
+      if(this.currentIndex < 1) {
+        return
+      }
+      this.setCurrentIndex(this.currentIndex - 1)
+
+      // _.forEach(this.imageNames, (item, index) => {
+      //   console.log(index, item)
+      // })
+      
+    },
+    imageFront() {
+      if(this.currentIndex > 50) return
+      this.setCurrentIndex(this.currentIndex + 1)
+    }
   }
 }
 </script>

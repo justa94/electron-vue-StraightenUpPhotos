@@ -63,6 +63,7 @@ export default {
       'setNumberOfFiles_origin',
       'setNumberOfFiles_complete',
       'setCurrentImagePath',
+      'setImageNames',
     ]),
     getSoucreFolder() {
       // 경로설정 Dialog 오픈
@@ -102,6 +103,7 @@ export default {
       this.setNumberOfFiles_complete(0)
 
       this.setCurrentImagePath(files[0])
+      this.setImageNames(files)
     }
   }
 }

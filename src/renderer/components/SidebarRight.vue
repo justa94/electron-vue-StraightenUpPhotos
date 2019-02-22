@@ -10,7 +10,7 @@
     </b-row>
     <b-row v-for="(destFolder, index) in destFolders" :key="index">
       <div>
-          <b-button variant="primary" v-html="destFolder.dirName" />
+          <b-button @click="moveImage(destFolder.dirPath)" variant="primary" v-html="destFolder.dirName" />
           <span v-html="destFolder.dirPath" class="pathView" />
           <!-- TODO: icon으로 수정, 삭제 버튼 만들기 -->
         </div>
@@ -36,7 +36,6 @@ import fs from 'fs'
 import path from 'path'
 import _ from 'lodash'
 import { setTimeout } from 'timers';
-// const _ = 'lodash'
 
 export default {
   name: 'SidebarRight',
@@ -44,7 +43,10 @@ export default {
   computed: {
     ...mapGetters([
       'currentImagePath',
-      'destFolders'
+      'destFolders',
+      'sourceFolderPath',
+      'imageNames',
+      'currentIndex'
     ])
   },
   data() {
@@ -54,7 +56,10 @@ export default {
   methods: {
     ...mapActions([
       'setCurrentImagePath',
-      'addDestFolders'
+      'addDestFolders',
+      'setSourceFolderPath',
+      'setImageNames',
+      'setCurrentIndex'
     ]),
     test() {
       const apath = dialog.showOpenDialog({
@@ -107,12 +112,20 @@ export default {
       console.log('dirName', dirName)
 
       // TODO: 폴더경로 중복검사
+      // TODO: src 폴더랑 경로가 같으면 안됨
       this.addDestFolders({dirPath, dirName})
 
 
       setTimeout(() => {
         console.dir(this.destFolders)
       }, 1000)
+    },
+    // @dev: 목적지 폴더 경로를 인자로 받아서 그 위치에 파일 이동
+    moveImage(destpath) {
+      const srcPath = this.sourceFolderPath + '\\' + this.imageNames[this.currentIndex]
+      
+      console.log('src: ', srcPath)
+      console.log('dest: ', destpath)
     }
   }
 }
