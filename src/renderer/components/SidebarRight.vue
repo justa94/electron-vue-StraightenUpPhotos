@@ -121,11 +121,23 @@ export default {
       }, 1000)
     },
     // @dev: 목적지 폴더 경로를 인자로 받아서 그 위치에 파일 이동
-    moveImage(destpath) {
+    moveImage(paramDestpath) {
       const srcPath = this.sourceFolderPath + '\\' + this.imageNames[this.currentIndex]
+      const destPath = paramDestpath + '\\' + this.imageNames[this.currentIndex]
       
       console.log('src: ', srcPath)
-      console.log('dest: ', destpath)
+      console.log('dest: ', destPath)
+
+      fs.rename(srcPath, destPath, (err) => {
+        if(err) {
+          console.error(err)
+          console.error('pbw error!')
+          return
+        }
+        
+        console.info('file move Success!')
+        console.info(srcPath + '==>' + destPath)
+      })
     }
   }
 }

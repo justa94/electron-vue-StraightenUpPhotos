@@ -87,8 +87,8 @@ export default {
 
   & > img {
     width: 100%;
-    max-width: 500px;
-    max-height: 700px;
+    max-width: 700px;
+    max-height: 800px;
   }
 }
 footer {

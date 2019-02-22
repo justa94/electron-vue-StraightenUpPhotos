@@ -1,7 +1,7 @@
 /* eslint-disable */
 // TODO: Folder를 Directory로 바꿀까?
 const state = {
-  currentImagePath: 'https://via.placeholder.com/500x700', // 현재 이미지파일 경로
+  currentImagePath: 'https://via.placeholder.com/700x800', // 현재 이미지파일 경로
   imageNames: [], // 이미지 경로들
   sourceFolderPath: '', // 정리 대상 폴더
   destFolders: [], // 이동하게될 목적 폴더들
