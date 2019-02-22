@@ -2,10 +2,10 @@
   <div>
     <b-row>
       <b-col>
-        <div>
+        <!-- <div>
           <b-button @click="test" variant="primary">test</b-button>
           <span v-html="currentImagePath" class="pathView" />
-        </div>
+        </div> -->
       </b-col>
     </b-row>
     <b-row v-for="(destFolder, index) in destFolders" :key="index">
@@ -46,7 +46,8 @@ export default {
       'destFolders',
       'sourceFolderPath',
       'imageNames',
-      'currentIndex'
+      'currentIndex',
+      'numberOfFiles_complete'
     ])
   },
   data() {
@@ -59,7 +60,8 @@ export default {
       'addDestFolders',
       'setSourceFolderPath',
       'setImageNames',
-      'setCurrentIndex'
+      'setCurrentIndex',
+      'setNumberOfFiles_complete'
     ]),
     test() {
       const apath = dialog.showOpenDialog({
@@ -128,16 +130,45 @@ export default {
       console.log('src: ', srcPath)
       console.log('dest: ', destPath)
 
-      fs.rename(srcPath, destPath, (err) => {
-        if(err) {
-          console.error(err)
-          console.error('pbw error!')
-          return
-        }
+      // 파일 이동
+      try {
+        fs.renameSync(srcPath, destPath);
+        console.log('success!')
+      }
+      catch(e) {
+        console.error(e)
+        console.error('pbw try error')
+        return
+      }
+
+      // 배열 수정 등 작업해주기
+      // Photo 변경, CurrentIndex 변경
+
+      // 배열 갈아치운다.
+      console.log('슬라이스 전1: ', this.imageNames)
+      // const a = _.slice(this.imageNames, this.currentIndex, this.currentIndex+1);
+      // array를 직접적으로 변경시킨다.
+      // 반환되는 변수는 제거한 변수를 반환한다.
+      const a = this.imageNames.splice(this.currentIndex, 1);
+      console.log('슬라이스 전2: ', this.imageNames)
+      console.log('슬라이스 후:', a);
+
+      // 처리된 이미지 파일 갯수 증가
+      this.setNumberOfFiles_complete(this.numberOfFiles_complete + 1)
+      
+
+
+
+      // fs.rename(srcPath, destPath, (err) => {
+      //   if(err) {
+      //     console.error(err)
+      //     console.error('pbw error!')
+      //     return
+      //   }
         
-        console.info('file move Success!')
-        console.info(srcPath + '==>' + destPath)
-      })
+      //   console.info('file move Success!')
+      //   console.info(srcPath + '==>' + destPath)
+      // })
     }
   }
 }

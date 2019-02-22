@@ -58,6 +58,7 @@ export default {
       console.log('imageNames', this.imageNames[3])
 
       if(this.currentIndex < 1) {
+        console.log('배열 길이 underflow')
         return
       }
       this.setCurrentIndex(this.currentIndex - 1)
@@ -68,7 +69,12 @@ export default {
       
     },
     imageFront() {
-      if(this.currentIndex > 50) return
+      console.log('this.currentIndex', this.currentIndex);
+      console.log('this.imageNames-1', this.imageNames.length-1);
+      if(this.currentIndex >= this.imageNames.length-1) {
+        console.log('배열길이 overflow')
+        return
+      }
       this.setCurrentIndex(this.currentIndex + 1)
     }
   }
