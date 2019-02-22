@@ -9,11 +9,15 @@
       </b-col>
     </b-row>
     <b-row v-for="(destFolder, index) in destFolders" :key="index" class="destBtn">
-      <div>
+      <!-- <b-col> -->
+        <div style="width: 100%">
           <b-button @click="moveImage(destFolder.dirPath)" variant="primary" v-html="destFolder.dirName" />
-          <span v-html="destFolder.dirPath" class="pathView" />
           <!-- TODO: icon으로 수정, 삭제 버튼 만들기 -->
         </div>
+        <div style="width: 100%">
+          <span v-html="destFolder.dirPath" class="pathView" />
+        </div>
+      <!-- </b-col> -->
     </b-row>
     <b-row style="justify-content: center;">
       <!-- <b-col> -->
@@ -181,6 +185,11 @@ export default {
   margin-bottom: 20px;
   & button {
     min-width: 100px;
+    max-width: 100px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 </style>
