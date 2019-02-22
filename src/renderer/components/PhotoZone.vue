@@ -1,13 +1,24 @@
 <template>
-  <div>
+  <div class="photoZone">
     PhotoZone
     <div class="imgContainer">
       <!-- TODO: src폴더 선택 전에는 빈 이미지 띄워놓기 -->
-      <img :src="sourceFolderPath + '\\' + currentImagePath" />
+      <img v-if="currentImagePath.indexOf('placeholder') !== -1" :src="currentImagePath" />
+      <img v-else :src="sourceFolderPath + '\\' + currentImagePath" />
       <!-- <img src="C:\Users\user\Downloads\10000img\img\rimg4aea56.jpg" /> -->
     </div>
-    <footer>
-      hi
+    <footer style="text-align: center">
+      <b-button class="imageBack">
+        <--
+      </b-button>
+      <b-button>
+        -->
+      </b-button>
+      <!-- i
+      <i class="placeholderImage" />
+      <img :src="imUrl" width="50px" height="50px" /> -->
+      <!-- <img src="static/image/right-arrow.jpg" /> -->
+      <!-- <img src="static/image/1.png" /> -->
     </footer>
   </div>
 </template>
@@ -27,7 +38,7 @@ export default {
   },
   data() {
     return {
-      
+      imUrl: 'static/image/right-arrow.svg'
     }
   },
   mounted() {
@@ -42,15 +53,19 @@ export default {
 </script>
 
 <style scoped lang='scss'>
+.photoZone {
+  
+  height: 100%;
+}
 .imgContainer {
-  // height: 100%;
+  height: 100%;
   // width: 500px;
   // height: 700px;
 
   & > img {
-    // width: 100%;
-    // max-width: 500px;
-    // max-height: 700px;
+    width: 100%;
+    max-width: 500px;
+    max-height: 700px;
   }
 }
 footer {
@@ -58,5 +73,13 @@ footer {
   position: absolute;
   bottom: 3%;
   width: 100%;
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+.imageBack {
+  background-image: url('/static/image/1.png')
+}
+.placeholderImage {
+  // background-image: url(static/image/placeholder.jpg)
 }
 </style>

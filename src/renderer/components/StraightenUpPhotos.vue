@@ -2,11 +2,11 @@
   <div>
     <Navbar />
     <b-container fluid >
-      <b-row class="maxHeight">
+      <b-row class="photoContent">
         <b-col cols="2">
           <SidebarLeft />
         </b-col>
-        <b-col>
+        <b-col style="text-align: center;">
           <PhotoZone />
         </b-col>
         <b-col cols="4">
@@ -65,7 +65,10 @@ export default {
 </script>
 
 <style scoped>
-.maxHeight {
+.photoContent {
   height: 93vh;
+  background: #1CD8D2;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #93EDC7, #1CD8D2);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #93EDC7, #1CD8D2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 </style>
