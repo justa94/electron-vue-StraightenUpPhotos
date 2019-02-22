@@ -35,6 +35,8 @@
 import { mapGetters, mapActions, mapState } from 'vuex'
 const { dialog } = require('electron').remote
 import fs from 'fs'
+import path from 'path'
+import _ from 'lodash'
 
 export default {
   name: 'Navbar',
@@ -62,23 +64,36 @@ export default {
     ]),
     getSoucreFolder() {
       // 경로설정 Dialog 오픈
-      const path = dialog.showOpenDialog({
+      const dirPath = dialog.showOpenDialog({
         properties: ['openDirectory']
       })
       // 예외처리
-      if(path === undefined) {
+      if(dirPath === undefined) {
         console.warn('폴더 선택 안됨')
         return
       }
 
       // 스토어에 저장
-      this.setSourceFolderPath(path[0])
+      this.setSourceFolderPath(dirPath[0])
 
       // 해당 폴더 안의 모든 파일들 이름 배열에 담기
-      const files = fs.readdirSync(path[0])
-      console.log(files)
+      const files = fs.readdirSync(dirPath[0])
+      
 
       // TODO: jpg 등 이미지 확장자만 뽑아내기
+      console.dir(path)
+      files.map((file) => {
+        const ext = path.extname(file)
+
+        if(ext !== '.jpg') {
+          return false
+        }
+        return true
+      })
+      console.log(files)
+      // _.forEach(files, (file) => {
+      //   console.dir(path.extname(file))
+      // })
 
       // 파일 갯수 설정
       this.setNumberOfFiles_origin(files.length)

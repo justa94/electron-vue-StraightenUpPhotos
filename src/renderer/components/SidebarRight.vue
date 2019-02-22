@@ -17,13 +17,12 @@
     </b-row>
     <b-row>
       <b-col>
+        <!-- TODO: src폴더 선택 전에는 Disable -->
         <b-button @click="hanldeClickNewDir" variant="secondary" size="sm">경로 추가</b-button>
       </b-col>
     </b-row>
     <b-row>
       <b-col>
-        <div>currentImagePath: {{ currentImagePath }}</div>
-        <div>destFolders: {{ destFolders }}</div>
       </b-col>
     </b-row>
   </div>

@@ -2,6 +2,7 @@
   <div>
     PhotoZone
     <div>
+      <!-- TODO: src폴더 선택 전에는 빈 이미지 띄워놓기 -->
       <img :src="currentImagePath" />
       <!-- <img src="C:\Users\user\Downloads\10000img\img\rimg4aea56.jpg" /> -->
     </div>
