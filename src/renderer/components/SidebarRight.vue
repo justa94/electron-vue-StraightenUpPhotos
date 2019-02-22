@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="sidebarRightContainer">
     <b-row>
       <b-col>
         <!-- <div>
@@ -8,22 +8,18 @@
         </div> -->
       </b-col>
     </b-row>
-    <b-row v-for="(destFolder, index) in destFolders" :key="index">
+    <b-row v-for="(destFolder, index) in destFolders" :key="index" class="destBtn">
       <div>
           <b-button @click="moveImage(destFolder.dirPath)" variant="primary" v-html="destFolder.dirName" />
           <span v-html="destFolder.dirPath" class="pathView" />
           <!-- TODO: icon으로 수정, 삭제 버튼 만들기 -->
         </div>
     </b-row>
-    <b-row>
-      <b-col>
+    <b-row style="justify-content: center;">
+      <!-- <b-col> -->
         <!-- TODO: src폴더 선택 전에는 Disable -->
         <b-button @click="hanldeClickNewDir" variant="secondary" size="sm">경로 추가</b-button>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-      </b-col>
+      <!-- </b-col> -->
     </b-row>
   </div>
 </template>
@@ -174,8 +170,17 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .pathView {
   font-size: 0.7rem;
+}
+.sidebarRightContainer {
+  padding: 50px 20px;
+}
+.destBtn {
+  margin-bottom: 20px;
+  & button {
+    min-width: 100px;
+  }
 }
 </style>

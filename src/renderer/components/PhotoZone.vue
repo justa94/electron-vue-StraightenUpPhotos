@@ -9,10 +9,10 @@
     </div>
     <footer style="text-align: center">
       <b-button @click="imageBack" class="imageBack">
-        <--
+        &lt;prev
       </b-button>
       <b-button @click="imageFront">
-        -->
+        next&gt;
       </b-button>
       <!-- i
       <i class="placeholderImage" />

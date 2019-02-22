@@ -13,6 +13,7 @@ export default new Vuex.Store({
   plugins: [
     createPersistedState()
     // createSharedMutations()
-  ]
-  // strict: process.env.NODE_ENV !== 'production'
+  ],
+  // vuex 사용이 혹시 안되면 아래를 주석처리 하면 됨
+  strict: process.env.NODE_ENV !== 'production'
 })
