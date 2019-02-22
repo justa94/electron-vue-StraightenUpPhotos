@@ -1,7 +1,7 @@
 <template>
   <div>
     <Navbar />
-    <b-container fluid>
+    <b-container fluid >
       <b-row class="maxHeight">
         <b-col cols="2">
           <SidebarLeft />
@@ -65,4 +65,7 @@ export default {
 </script>
 
 <style scoped>
+.maxHeight {
+  height: 93vh;
+}
 </style>

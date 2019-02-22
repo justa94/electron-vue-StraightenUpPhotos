@@ -1,11 +1,14 @@
 <template>
   <div>
     PhotoZone
-    <div>
+    <div class="imgContainer">
       <!-- TODO: src폴더 선택 전에는 빈 이미지 띄워놓기 -->
-      <img :src="currentImagePath" />
+      <img :src="sourceFolderPath + '\\' + currentImagePath" />
       <!-- <img src="C:\Users\user\Downloads\10000img\img\rimg4aea56.jpg" /> -->
     </div>
+    <footer>
+      hi
+    </footer>
   </div>
 </template>
 
@@ -17,7 +20,10 @@ export default {
   name: 'PhotoZone',
   components: { },
   computed: {
-    ...mapGetters(['currentImagePath'])
+    ...mapGetters([
+      'currentImagePath',
+      'sourceFolderPath'
+    ])
   },
   data() {
     return {
@@ -35,5 +41,22 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang='scss'>
+.imgContainer {
+  // height: 100%;
+  // width: 500px;
+  // height: 700px;
+
+  & > img {
+    // width: 100%;
+    // max-width: 500px;
+    // max-height: 700px;
+  }
+}
+footer {
+  color: red;
+  position: absolute;
+  bottom: 3%;
+  width: 100%;
+}
 </style>
