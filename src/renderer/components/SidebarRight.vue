@@ -8,7 +8,7 @@
         </div>
       </b-col>
     </b-row>
-    <b-row v-for="destFolder in destFolders">
+    <b-row v-for="(destFolder, index) in destFolders" :key="index">
       <div>
           <b-button variant="primary" v-html="destFolder.dirName" />
           <span v-html="destFolder.dirPath" class="pathView" />
