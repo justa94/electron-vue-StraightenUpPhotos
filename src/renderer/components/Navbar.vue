@@ -63,11 +63,11 @@ export default {
       // 예외처리
       if(dirPath === undefined) {
         console.warn('폴더 선택 안됨')
+        // TODO: noti 띄우기
         return
       }
 
-      // 스토어에 저장
-      this.setSourceFolderPath(dirPath[0])
+      
 
       // 해당 폴더 안의 모든 파일들 이름 배열에 담기
       // TODO: 파일들 날짜순으로 정렬해서 넣을 순 없을까?
@@ -88,6 +88,16 @@ export default {
       })
       console.log(files);
       console.log('unde?', files.length === 0)
+
+      if(files.length === 0) {
+        // 이미지가 없는 폴더
+        // TODO: noti 띄우기
+        return;
+      }
+
+      // 스토어에 저장
+      this.setSourceFolderPath(dirPath[0])
+
 
       // 파일 갯수 설정
       this.setNumberOfFiles_origin(files.length)
