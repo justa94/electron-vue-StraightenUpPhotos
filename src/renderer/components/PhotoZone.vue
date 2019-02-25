@@ -8,12 +8,18 @@
       <!-- <img src="C:\Users\user\Downloads\10000img\img\rimg4aea56.jpg" /> -->
     </div>
     <footer style="text-align: center">
-      <a-button @click="imageBack" class="imageBack">
+      <!-- <a-button @click="imageBack" class="imageBack">
         &lt;prev
-      </a-button>
-      <a-button @click="imageFront">
+      </a-button> -->
+      <!-- <a-button @click="imageFront">
         next&gt;
-      </a-button>
+      </a-button> -->
+      
+      <img src="@/assets/image/prev.svg" class="direction" />
+      <img src="@/assets/image/next.svg" class="direction" />
+
+
+
       <!-- i
       <i class="placeholderImage" />
       <img :src="imUrl" width="50px" height="50px" /> -->
@@ -119,4 +125,16 @@ footer {
 .placeholderImage {
   // background-image: url(static/image/placeholder.jpg)
 }
+
+.direction {
+  width: 12%;
+  max-width: 70px;
+  min-width: 30px;
+  cursor: pointer;
+
+  &:first-child {
+    margin-right: 3%;
+  }
+}
+
 </style>
