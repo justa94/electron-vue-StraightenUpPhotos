@@ -97,6 +97,7 @@ export default {
         return true
       })
       console.log(files);
+      console.log('unde?', files.length === 0)
 
       // 파일 갯수 설정
       this.setNumberOfFiles_origin(files.length)
