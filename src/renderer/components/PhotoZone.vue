@@ -1,6 +1,6 @@
 <template>
   <div class="photoZone">
-    PhotoZone
+    <!-- PhotoZone -->
     <div class="imgContainer">
       <!-- TODO: src폴더 선택 전에는 빈 이미지 띄워놓기 -> 좀더 오류없게끔 처리 다시하기 -->
       <img v-if="currentImagePath.indexOf('placeholder') !== -1" :src="currentImagePath" />
@@ -8,12 +8,12 @@
       <!-- <img src="C:\Users\user\Downloads\10000img\img\rimg4aea56.jpg" /> -->
     </div>
     <footer style="text-align: center">
-      <b-button @click="imageBack" class="imageBack">
+      <a-button @click="imageBack" class="imageBack">
         &lt;prev
-      </b-button>
-      <b-button @click="imageFront">
+      </a-button>
+      <a-button @click="imageFront">
         next&gt;
-      </b-button>
+      </a-button>
       <!-- i
       <i class="placeholderImage" />
       <img :src="imUrl" width="50px" height="50px" /> -->
@@ -87,9 +87,10 @@ export default {
   height: 100%;
 }
 .imgContainer {
-  height: 100%;
+  // height: 100%;
   // width: 500px;
   // height: 700px;
+  text-align: center;
 
   & > img {
     width: 100%;
@@ -99,11 +100,18 @@ export default {
 }
 footer {
   color: red;
-  position: absolute;
-  bottom: 3%;
+  // position: absolute;
+  // bottom: 3%;
+  margin-top: 3%;
   width: 100%;
   padding: 0 15px;
   box-sizing: border-box;
+
+  & > button {
+    &:first-child {
+      margin-right: 2%;
+    }
+  }
 }
 .imageBack {
   background-image: url('/static/image/1.png')

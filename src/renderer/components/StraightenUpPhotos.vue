@@ -1,19 +1,17 @@
 <template>
   <div>
-    <Navbar />
-    <b-container fluid >
-      <b-row class="photoContent">
-        <b-col cols="2">
+      <Navbar />
+      <a-row type="flex" justify="space-between" :gutter="0" class="photoContent">
+        <a-col :span="6">
           <SidebarLeft />
-        </b-col>
-        <b-col style="text-align: center;">
+        </a-col>
+        <a-col :span="12">
           <PhotoZone />
-        </b-col>
-        <b-col cols="4">
+        </a-col>
+        <a-col :span="6">
           <SidebarRight />
-        </b-col>
-      </b-row>
-    </b-container>
+        </a-col>
+      </a-row>
     
     <!-- VueX 테스트 -->
     <!-- <div>

@@ -1,30 +1,36 @@
 <template>
   <div class="sidebarRightContainer">
-    <b-row>
-      <b-col>
-        <!-- <div>
-          <b-button @click="test" variant="primary">test</b-button>
-          <span v-html="currentImagePath" class="pathView" />
-        </div> -->
-      </b-col>
-    </b-row>
-    <b-row v-for="(destFolder, index) in destFolders" :key="index" class="destBtn">
-      <!-- <b-col> -->
-        <div style="width: 100%">
-          <b-button @click="moveImage(destFolder.dirPath)" variant="primary" v-html="destFolder.dirName" />
-          <!-- TODO: icon으로 수정, 삭제 버튼 만들기 -->
-        </div>
-        <div style="width: 100%">
-          <span v-html="destFolder.dirPath" class="pathView" />
-        </div>
-      <!-- </b-col> -->
+    <a-row v-for="(destFolder, index) in destFolders" :key="index" class="destBtn">
+      <div style="width: 100%">
+        <a-button @click="moveImage(destFolder.dirPath)" v-html="destFolder.dirName" type="default" size="large" />
+        <!-- TODO: icon으로 수정, 삭제 버튼 만들기 -->
+      </div>
+      <div style="width: 100%">
+        <span v-html="destFolder.dirPath" class="pathView" />
+      </div>
+    </a-row>
+    <a-row style="text-align: center">
+      <!-- TODO: src폴더 선택 전에는 Disable -->
+      <a-button @click="hanldeClickNewDir" size="small" type="primary">
+        <a-icon type="plus-circle" />
+        경로 추가
+      </a-button>
+    </a-row>
+
+
+
+
+    <!-- <b-row v-for="(destFolder, index) in destFolders" :key="index" class="destBtn">
+      <div style="width: 100%">
+        <b-button @click="moveImage(destFolder.dirPath)" variant="primary" v-html="destFolder.dirName" />
+      </div>
+      <div style="width: 100%">
+        <span v-html="destFolder.dirPath" class="pathView" />
+      </div>
     </b-row>
     <b-row style="justify-content: center;">
-      <!-- <b-col> -->
-        <!-- TODO: src폴더 선택 전에는 Disable -->
-        <b-button @click="hanldeClickNewDir" variant="secondary" size="sm">경로 추가</b-button>
-      <!-- </b-col> -->
-    </b-row>
+      <b-button @click="hanldeClickNewDir" variant="secondary" size="sm">경로 추가</b-button>
+    </b-row> -->
   </div>
 </template>
 
@@ -184,8 +190,8 @@ export default {
 .destBtn {
   margin-bottom: 20px;
   & button {
-    min-width: 100px;
-    max-width: 100px;
+    min-width: 120px;
+    max-width: 120px;
 
     white-space: nowrap;
     overflow: hidden;

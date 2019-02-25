@@ -5,12 +5,18 @@ import App from './App'
 import router from './router'
 import store from './store'
 
-import BootstrapVue from 'bootstrap-vue'
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
+// import BootstrapVue from 'bootstrap-vue'
+// import 'bootstrap/dist/css/bootstrap.css'
+// import 'bootstrap-vue/dist/bootstrap-vue.css'
 // import '../../assets/photon-0.1.2-alpha/dist/css/photon.css'
 
-Vue.use(BootstrapVue)
+import Antd from 'ant-design-vue'
+
+import 'ant-design-vue/dist/antd.css'
+
+Vue.use(Antd)
+
+// Vue.use(BootstrapVue)
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.http = Vue.prototype.$http = axios
