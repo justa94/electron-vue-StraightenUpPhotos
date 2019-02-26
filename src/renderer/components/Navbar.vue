@@ -65,6 +65,7 @@ export default {
       'setNumberOfFiles_complete',
       'setCurrentImagePath',
       'setImageNames',
+      'setSrcSelected',
     ]),
     getSoucreFolder() {
       // 경로설정 Dialog 오픈
@@ -73,7 +74,6 @@ export default {
       })
       // 예외처리
       if(dirPath === undefined) {
-        console.warn('폴더 선택 안됨')
         this.noti('warning', '폴더를 선택하세요')
         return
       }
@@ -88,54 +88,33 @@ export default {
         'png',
         'gif',
       ]
-      // console.log('ext.toLowerCase - .JPG', _.lowerCase('.JPG'))
-      // console.log('ext.toLowerCase - .png', _.lowerCase('.png'))
-      // console.log('ext.toLowerCase - .PNG', _.lowerCase('.PNG'))
-      // console.log('ext.toLowerCase - .gif', _.lowerCase('.gif'))
-      // console.log('ext.toLowerCase - .GIF', _.lowerCase('.GIF'))
       
       files = files.filter((file) => {
         const ext = path.extname(file)
 
-        // const ret = _.forEach(extAllows, (item) => {
-        //   if(ext.toLowerCase === '.jpg') {
-        //     console.log('items?', item)
-        //     return true;
-        //   }
-        // })
-
         for(let i=0; i<extAllows.length; i++) {
-          console.log('item?', extAllows[i])
-          console.log('ext.toLowerCase', _.lowerCase(ext))
-          
           if(_.lowerCase(ext) === extAllows[i]) {
-            // console.log('ext1', ext)
             console.log('ret true')
             return true
           }
         }
-        
         return false
       })
-      console.log(files);
-      console.log('unde?', files.length === 0)
 
       if(files.length === 0) {
-        // 이미지가 없는 폴더
         this.noti('warning', '이미지가 없는 폴더입니다.')
         return;
       }
 
       // 스토어에 저장
       this.setSourceFolderPath(dirPath[0])
-
+      this.setCurrentImagePath(files[0])
+      this.setImageNames(files)
+      this.setSrcSelected(true)
 
       // 파일 갯수 설정
       this.setNumberOfFiles_origin(files.length)
       this.setNumberOfFiles_complete(0)
-
-      this.setCurrentImagePath(files[0])
-      this.setImageNames(files)
     }
   }
 }

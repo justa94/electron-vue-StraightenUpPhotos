@@ -7,8 +7,12 @@
     </div>
     <div class="imgContainer">
       <!-- TODO: src폴더 선택 전에는 빈 이미지 띄워놓기 -> 좀더 오류없게끔 처리 다시하기 -->
-      <img v-if="currentImagePath.indexOf('placeholder') !== -1" :src="currentImagePath" />
+      <img v-if="!srcSelected" src="https://via.placeholder.com/700x800" />
       <img v-else :src="sourceFolderPath + '\\' + imageNames[currentIndex]" />
+
+
+      <!-- <img v-if="currentImagePath.indexOf('placeholder') !== -1" :src="currentImagePath" />
+      <img v-else :src="sourceFolderPath + '\\' + imageNames[currentIndex]" /> -->
       <!-- <img src="C:\Users\user\Downloads\10000img\img\rimg4aea56.jpg" /> -->
     </div>
     <footer style="text-align: center">
@@ -44,6 +48,7 @@ export default {
       'sourceFolderPath',
       'imageNames',
       'currentIndex',
+      'srcSelected',
     ]),
     
   },
