@@ -4,6 +4,12 @@
       <div style="width: 100%">
         <a-button @click="moveImage(destFolder.dirPath)" v-html="destFolder.dirName" type="default" size="large" />
         <!-- TODO: icon으로 수정, 삭제 버튼 만들기 -->
+        <span class="iconContainer">
+          <!-- <img src="@/assets/image/edit.svg" /> -->
+          <!-- <a-icon type="smile" theme="twoTone" /> -->
+          <a-icon type="edit" theme="twoTone" twoToneColor="blue" />
+          <a-icon type="delete" theme="twoTone" twoToneColor="red" />
+        </span>
       </div>
       <div style="width: 100%">
         <span v-html="destFolder.dirPath" class="pathView" />
@@ -196,6 +202,18 @@ export default {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+}
+.iconContainer {
+  & > i {
+    font-size: 1.5rem;
+    border-radius: 50%;
+    // border-color: #1890ff;
+    // background-color: rgb(230, 247, 255);
+    
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
 </style>

@@ -5,7 +5,7 @@
       <img src="@/assets/image/next.svg" class="direction" @click="imageFront" />
     </div>
     <div class="imgContainer">
-      <img v-if="!srcSelected" src="https://via.placeholder.com/700x800" />
+      <img v-if="!srcSelected" src="https://via.placeholder.com/700x700" />
       <img v-else :src="sourceFolderPath + '\\' + imageNames[currentIndex]" />
     </div>
   </div>
@@ -61,7 +61,7 @@ export default {
 
 <style scoped lang='scss'>
 .photoZone {
-  height: 100%;
+  // height: 100%;
 }
 .imgContainer {
   text-align: center;
@@ -69,7 +69,7 @@ export default {
   & > img {
     width: 100%;
     max-width: 700px;
-    max-height: 800px;
+    max-height: 700px;
   }
 }
 .imageBack {

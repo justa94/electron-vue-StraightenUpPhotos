@@ -135,7 +135,7 @@ export default {
 .imageNameContainer {
   margin: auto 0; 
   // margin-right: 12%;
-  flex: 1;
+  // flex: 1;
   text-align: center;
 }
 
