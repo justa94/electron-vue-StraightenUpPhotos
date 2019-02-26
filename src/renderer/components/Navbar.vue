@@ -94,7 +94,6 @@ export default {
 
         for(let i=0; i<extAllows.length; i++) {
           if(_.lowerCase(ext) === extAllows[i]) {
-            console.log('ret true')
             return true
           }
         }
