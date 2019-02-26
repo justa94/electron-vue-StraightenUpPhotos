@@ -10,12 +10,15 @@
             <span v-html="sourceFolderPath" class="pathView" />
           </div>
         </div>
-        <div>
-          <h1>Photo</h1>
-          <!-- TODO: 현재 사진 파일명 출력 -->
-        </div>
-        <h2>
-          {{ numberOfFiles_complete }} / {{ numberOfFiles_origin }}
+        <!-- <div> -->
+          <!-- <h1>Photo</h1> -->
+          <h3 style="margin: auto 0; margin-right: 12%;">{{ imageNames[currentIndex] }}</h3>
+        <!-- </div> -->
+        
+        <h2 style="margin: auto 0;">
+          <!-- <div style="font-size: 1rem">처리량</div>
+          {{ numberOfFiles_complete }} / {{ numberOfFiles_origin }} -->
+          {{ currentIndex+1 }} / {{ remainFiles }}
         </h2>
   </div>
 </template>
@@ -27,21 +30,29 @@ const { dialog } = require('electron').remote
 import fs from 'fs'
 import path from 'path'
 import _ from 'lodash'
+import mixin from '@/mixin'
 
 export default {
   name: 'Navbar',
   components: { },
+  mixins: [mixin],
   computed: {
     ...mapGetters([
       'sourceFolderPath',
       'currentImagePath',
+      'currentIndex',
       'numberOfFiles_origin',
       'numberOfFiles_complete',
       'currentImagePath',
+      'imageNames',
     ]),
-    ...mapState({
-      photo: state => state.Photo
-    })
+    remainFiles() {
+      return this.numberOfFiles_origin - this.numberOfFiles_complete
+    }
+    // mapState 사용 안함
+    // ...mapState({
+    //   photo: state => state.Photo
+    // })
   },
   data() {
     return {
@@ -63,35 +74,55 @@ export default {
       // 예외처리
       if(dirPath === undefined) {
         console.warn('폴더 선택 안됨')
-        // TODO: noti 띄우기
+        this.noti('warning', '폴더를 선택하세요')
         return
       }
-
-      
 
       // 해당 폴더 안의 모든 파일들 이름 배열에 담기
       // TODO: 파일들 날짜순으로 정렬해서 넣을 순 없을까?
       // TODO: 반응형으로 만들기위해서 사이즈 줄어들면 폴더 버튼이랑 수량표시 없애기
       let files = fs.readdirSync(dirPath[0])
-      
 
-      // TODO: jpg 등 이미지 확장자만 뽑아내기
-      console.dir(path)
+      const extAllows = [
+        'jpg',
+        'png',
+        'gif',
+      ]
+      // console.log('ext.toLowerCase - .JPG', _.lowerCase('.JPG'))
+      // console.log('ext.toLowerCase - .png', _.lowerCase('.png'))
+      // console.log('ext.toLowerCase - .PNG', _.lowerCase('.PNG'))
+      // console.log('ext.toLowerCase - .gif', _.lowerCase('.gif'))
+      // console.log('ext.toLowerCase - .GIF', _.lowerCase('.GIF'))
+      
       files = files.filter((file) => {
         const ext = path.extname(file)
 
-        if(ext !== '.jpg') {
-          console.log('ext1', ext)
-          return false
+        // const ret = _.forEach(extAllows, (item) => {
+        //   if(ext.toLowerCase === '.jpg') {
+        //     console.log('items?', item)
+        //     return true;
+        //   }
+        // })
+
+        for(let i=0; i<extAllows.length; i++) {
+          console.log('item?', extAllows[i])
+          console.log('ext.toLowerCase', _.lowerCase(ext))
+          
+          if(_.lowerCase(ext) === extAllows[i]) {
+            // console.log('ext1', ext)
+            console.log('ret true')
+            return true
+          }
         }
-        return true
+        
+        return false
       })
       console.log(files);
       console.log('unde?', files.length === 0)
 
       if(files.length === 0) {
         // 이미지가 없는 폴더
-        // TODO: noti 띄우기
+        this.noti('warning', '이미지가 없는 폴더입니다.')
         return;
       }
 

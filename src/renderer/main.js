@@ -4,6 +4,7 @@ import axios from 'axios'
 import App from './App'
 import router from './router'
 import store from './store'
+import mixin from '@/mixin'
 
 // import BootstrapVue from 'bootstrap-vue'
 // import 'bootstrap/dist/css/bootstrap.css'
@@ -27,5 +28,6 @@ new Vue({
   components: { App },
   router,
   store,
+  mixins: mixin,
   template: '<App/>'
 }).$mount('#app')

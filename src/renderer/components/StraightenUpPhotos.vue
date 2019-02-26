@@ -2,13 +2,13 @@
   <div>
       <Navbar />
       <a-row type="flex" justify="space-between" :gutter="0" class="photoContent">
-        <a-col :span="6">
+        <a-col :span="5">
           <SidebarLeft />
         </a-col>
-        <a-col :span="12">
+        <a-col :span="14">
           <PhotoZone />
         </a-col>
-        <a-col :span="6">
+        <a-col :span="5">
           <SidebarRight />
         </a-col>
       </a-row>

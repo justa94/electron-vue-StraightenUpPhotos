@@ -1,6 +1,10 @@
 <template>
   <div class="photoZone">
     <!-- PhotoZone -->
+    <div class="directionContainer">
+      <img src="@/assets/image/prev.svg" class="direction" @click="imageBack" />
+      <img src="@/assets/image/next.svg" class="direction" @click="imageFront" />
+    </div>
     <div class="imgContainer">
       <!-- TODO: src폴더 선택 전에는 빈 이미지 띄워놓기 -> 좀더 오류없게끔 처리 다시하기 -->
       <img v-if="currentImagePath.indexOf('placeholder') !== -1" :src="currentImagePath" />
@@ -14,10 +18,6 @@
       <!-- <a-button @click="imageFront">
         next&gt;
       </a-button> -->
-      
-      <img src="@/assets/image/prev.svg" class="direction" />
-      <img src="@/assets/image/next.svg" class="direction" />
-
 
 
       <!-- i
@@ -44,7 +44,8 @@ export default {
       'sourceFolderPath',
       'imageNames',
       'currentIndex',
-    ])
+    ]),
+    
   },
   data() {
     return {
@@ -122,15 +123,17 @@ footer {
 .imageBack {
   background-image: url('/static/image/1.png')
 }
-.placeholderImage {
-  // background-image: url(static/image/placeholder.jpg)
+.directionContainer {
+  text-align: center;
+  margin: 1rem 0;
 }
-
 .direction {
   width: 12%;
   max-width: 70px;
   min-width: 30px;
   cursor: pointer;
+
+  // margin-right: 3%;
 
   &:first-child {
     margin-right: 3%;
