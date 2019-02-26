@@ -37,6 +37,10 @@ const actions = {
     // state.destFolers = payload
     state.destFolders.push(payload)
   },
+  changeDestFolders({ commit }, payload) {
+    console.log('d')
+    state.destFolders[payload.index] = payload.data
+  },
   setNumberOfFiles_origin({ commit }, payload) {
     state.numberOfFiles_origin = payload
   },

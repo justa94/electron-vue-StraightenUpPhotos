@@ -1,14 +1,17 @@
 <template>
   <div class="sidebarRightContainer">
     <a-row v-for="(destFolder, index) in destFolders" :key="index" class="destBtn">
-      <div style="width: 100%">
-        <a-button @click="moveImage(destFolder.dirPath)" v-html="destFolder.dirName" type="default" size="large" />
+      <div class="moveContainer">
+        <a-button @click="moveImage(destFolder.dirPath)" v-html="destFolder.dirName" class="moveBtn" type="primary" size="large" />
         <!-- TODO: icon으로 수정, 삭제 버튼 만들기 -->
         <span class="iconContainer">
           <!-- <img src="@/assets/image/edit.svg" /> -->
           <!-- <a-icon type="smile" theme="twoTone" /> -->
-          <a-icon type="edit" theme="twoTone" twoToneColor="blue" />
-          <a-icon type="delete" theme="twoTone" twoToneColor="red" />
+          
+          <a-tag color="#2db7f5" @click="changePath(index)">변경</a-tag>
+          <a-tag color="#f50" @click="removePath(index)">삭제</a-tag>
+          <!-- <a-icon type="edit" theme="twoTone" twoToneColor="blue" />
+          <a-icon type="delete" theme="twoTone" twoToneColor="red" /> -->
         </span>
       </div>
       <div style="width: 100%">
@@ -73,7 +76,8 @@ export default {
       'setSourceFolderPath',
       'setImageNames',
       'setCurrentIndex',
-      'setNumberOfFiles_complete'
+      'setNumberOfFiles_complete',
+      'changeDestFolders',
     ]),
     test() {
       const apath = dialog.showOpenDialog({
@@ -128,11 +132,6 @@ export default {
       // TODO: 폴더경로 중복검사
       // TODO: src 폴더랑 경로가 같으면 안됨
       this.addDestFolders({dirPath, dirName})
-
-
-      setTimeout(() => {
-        console.dir(this.destFolders)
-      }, 1000)
     },
     // @dev: 목적지 폴더 경로를 인자로 받아서 그 위치에 파일 이동
     moveImage(paramDestpath) {
@@ -181,6 +180,44 @@ export default {
       //   console.info('file move Success!')
       //   console.info(srcPath + '==>' + destPath)
       // })
+    },
+    changePath(index) {
+      console.log('changePath', index)
+      // TODO: 구현
+      // TODO: openDialog 코드가 중복되니까 mixin 처리하기
+      let dirPath = dialog.showOpenDialog({
+        properties: ['openDirectory']
+      })
+
+      // 예외처리
+      if(dirPath === undefined) {
+        this.noti('warning', '폴더를 선택하세요')
+        return
+      }
+
+      dirPath = dirPath[0]
+
+      const dirName = path.basename(dirPath)
+
+
+      const payload = {
+        index,
+        data: {
+          dirName,
+          dirPath
+        }
+      }
+
+      // TODO: 음 store state를 직접만지네 수정하자.
+      const ret = this.destFolders.splice(index, 1, {dirPath, dirName});
+
+    },
+    removePath(index) {
+      console.log('removePath', index)
+      // TODO: 음 store state를 직접만지네 수정하자.
+      const ret = this.destFolders.splice(index, 1);
+      // TODO: 제거하기전에 confirm하기
+      // TODO 제거 Noti 띄우기
     }
   }
 }
@@ -215,5 +252,15 @@ export default {
       cursor: pointer;
     }
   }
+}
+.moveContainer {
+  // width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.moveBtn {
+  background-color: #87d068;
+  border-color: lightsteelblue;
+  color: darkgreen;
 }
 </style>
