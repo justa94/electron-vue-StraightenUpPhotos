@@ -1,6 +1,6 @@
 <template>
   <div class="navHeight">
-        <div>
+        <div style="flex: 0; text-align: center;">
           <a-button @click="getSoucreFolder" class="selectFolder" type="primary">
             <a-icon type="folder" />
             폴더 선택
@@ -12,7 +12,7 @@
         </div>
         <!-- <div> -->
           <!-- <h1>Photo</h1> -->
-          <h3 style="margin: auto 0; margin-right: 12%;">{{ imageNames[currentIndex] }}</h3>
+          <h3 style="margin: auto 0; margin-right: 12%;" class="imageNameContainer">{{ imageNames[currentIndex] }}</h3>
         <!-- </div> -->
         
         <h2 style="margin: auto 0;">
@@ -125,11 +125,18 @@ export default {
   background: -webkit-linear-gradient(to right, #E2E2E2, #C9D6FF);  /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to right, #E2E2E2, #C9D6FF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
-  height: 7vh;
+  height: 10vh;
   display: flex;
   justify-content: space-around;
 
   padding: 1% 0;
+}
+
+.imageNameContainer {
+  margin: auto 0; 
+  // margin-right: 12%;
+  flex: 1;
+  text-align: center;
 }
 
 .selectFolder {
@@ -137,20 +144,11 @@ export default {
   background-image: linear-gradient(315deg, #ff4e00 0%, #ec9f05 74%);
   border-color: #ff4e00;
 
-  &:hover {
+  &:hover, &:focus {
     background-color: #ff4e00;
     background-image: linear-gradient(315deg, #ff4e00 50%, #ec9f05 90%);
     border-color: #ff4e00;
   }
-  &:focus {
-    background-color: #ff4e00;
-    background-image: linear-gradient(315deg, #ff4e00 50%, #ec9f05 90%);
-    border-color: #ff4e00;
-  }
-  // color: blue;
-  // font-weight: bold;
-  // text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
-  // box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
 }
 
 .pathView {
