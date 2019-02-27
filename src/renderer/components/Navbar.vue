@@ -1,25 +1,25 @@
 <template>
   <div class="navHeight">
-        <div style="flex: 0; text-align: center;">
-          <a-button @click="getSoucreFolder" class="selectFolder" type="primary">
-            <a-icon type="folder" />
-            폴더 선택
-            <!-- TODO: 아이콘 넣어서 선택전, 선택후 구분하기 -->
-          </a-button>
-          <div>
-            <span v-html="sourceFolderPath" class="pathView" />
-          </div>
-        </div>
-        <!-- <div> -->
-          <!-- <h1>Photo</h1> -->
-          <h3 style="margin: auto 0; margin-right: 12%;" class="imageNameContainer">{{ imageNames[currentIndex] }}</h3>
-        <!-- </div> -->
-        
-        <h2 style="margin: auto 0;">
-          <!-- <div style="font-size: 1rem">처리량</div>
-          {{ numberOfFiles_complete }} / {{ numberOfFiles_origin }} -->
-          {{ currentIndex+1 }} / {{ remainFiles }}
-        </h2>
+    <div style="flex: 0; text-align: center;">
+      <a-button @click="getSoucreFolder" class="selectFolder" type="primary">
+        <a-icon type="folder" />
+        폴더 선택
+        <!-- TODO: 아이콘 넣어서 선택전, 선택후 구분하기 -->
+      </a-button>
+      <div>
+        <span v-html="sourceFolderPath" class="pathView" />
+      </div>
+    </div>
+    <!-- <div> -->
+      <!-- <h1>Photo</h1> -->
+      <h3 style="margin: auto 0; margin-right: 12%;" class="imageNameContainer">{{ imageNames[currentIndex] }}</h3>
+    <!-- </div> -->
+    
+    <h2 style="margin: auto 0;">
+      <!-- <div style="font-size: 1rem">처리량</div>
+      {{ numberOfFiles_complete }} / {{ numberOfFiles_origin }} -->
+      {{ currentIndex+1 }} / {{ remainFiles }}
+    </h2>
   </div>
 </template>
 

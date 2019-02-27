@@ -2,6 +2,7 @@
   <div class="sidebarRightContainer">
     <a-row v-for="(destFolder, index) in destFolders" :key="index" class="destBtn">
       <div class="moveContainer">
+        <!-- TODO: hover, focus 시에 color 변경 -->
         <a-button @click="moveImage(destFolder.dirPath)" v-html="destFolder.dirName" class="moveBtn" type="primary" size="large" />
         <!-- TODO: icon으로 수정, 삭제 버튼 만들기 -->
         <span class="iconContainer">
@@ -51,10 +52,12 @@ import fs from 'fs'
 import path from 'path'
 import _ from 'lodash'
 import { setTimeout } from 'timers';
+import mixin from '@/mixin'
 
 export default {
   name: 'SidebarRight',
   components: { },
+  mixins: [mixin],
   computed: {
     ...mapGetters([
       'currentImagePath',
@@ -116,19 +119,8 @@ export default {
       })
     },
     hanldeClickNewDir() {
-      let dirPath = dialog.showOpenDialog({
-        properties: ['openDirectory']
-      })
-      // 예외처리
-      if(dirPath === undefined) {
-        console.warn('폴더 선택 안됨')
-        return
-      }
-      dirPath = dirPath[0]
-
-      console.log('dirPath', dirPath)
+      const dirPath = this.openDialog()
       const dirName = path.basename(dirPath)
-      console.log('dirName', dirName)
 
       // TODO: 폴더경로 중복검사
       // TODO: src 폴더랑 경로가 같으면 안됨
@@ -183,23 +175,8 @@ export default {
       // })
     },
     changePath(index) {
-      console.log('changePath', index)
-      // TODO: 구현
-      // TODO: openDialog 코드가 중복되니까 mixin 처리하기
-      let dirPath = dialog.showOpenDialog({
-        properties: ['openDirectory']
-      })
-
-      // 예외처리
-      if(dirPath === undefined) {
-        this.noti('warning', '폴더를 선택하세요')
-        return
-      }
-
-      dirPath = dirPath[0]
-
+      const dirPath = this.openDialog()
       const dirName = path.basename(dirPath)
-
 
       const payload = {
         index,
