@@ -39,7 +39,11 @@ const actions = {
   },
   changeDestFolders({ commit }, payload) {
     console.log('d')
-    state.destFolders[payload.index] = payload.data
+    state.destFolders.splice(payload.index, 1, payload.data);
+    // state.destFolders[payload.index] = payload.data
+  },
+  popDestFolders({ commit }, index) {
+    state.destFolders.splice(index, 1)
   },
   setNumberOfFiles_origin({ commit }, payload) {
     state.numberOfFiles_origin = payload

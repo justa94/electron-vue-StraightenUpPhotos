@@ -78,6 +78,7 @@ export default {
       'setCurrentIndex',
       'setNumberOfFiles_complete',
       'changeDestFolders',
+      'popDestFolders',
     ]),
     test() {
       const apath = dialog.showOpenDialog({
@@ -208,14 +209,12 @@ export default {
         }
       }
 
-      // TODO: 음 store state를 직접만지네 수정하자.
-      const ret = this.destFolders.splice(index, 1, {dirPath, dirName});
-
+      this.changeDestFolders(payload)
     },
     removePath(index) {
       console.log('removePath', index)
-      // TODO: 음 store state를 직접만지네 수정하자.
-      const ret = this.destFolders.splice(index, 1);
+      this.popDestFolders(index)
+
       // TODO: 제거하기전에 confirm하기
       // TODO 제거 Noti 띄우기
     }
