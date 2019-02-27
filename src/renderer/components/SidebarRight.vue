@@ -1,30 +1,45 @@
 <template>
   <div class="sidebarRightContainer">
-    <b-row>
-      <b-col>
-        <!-- <div>
-          <b-button @click="test" variant="primary">test</b-button>
-          <span v-html="currentImagePath" class="pathView" />
-        </div> -->
-      </b-col>
-    </b-row>
-    <b-row v-for="(destFolder, index) in destFolders" :key="index" class="destBtn">
-      <!-- <b-col> -->
-        <div style="width: 100%">
-          <b-button @click="moveImage(destFolder.dirPath)" variant="primary" v-html="destFolder.dirName" />
-          <!-- TODO: icon으로 수정, 삭제 버튼 만들기 -->
-        </div>
-        <div style="width: 100%">
-          <span v-html="destFolder.dirPath" class="pathView" />
-        </div>
-      <!-- </b-col> -->
+    <a-row v-for="(destFolder, index) in destFolders" :key="index" class="destBtn">
+      <div class="moveContainer">
+        <a-button @click="moveImage(destFolder.dirPath)" v-html="destFolder.dirName" class="moveBtn" type="primary" size="large" />
+        <!-- TODO: icon으로 수정, 삭제 버튼 만들기 -->
+        <span class="iconContainer">
+          <!-- <img src="@/assets/image/edit.svg" /> -->
+          <!-- <a-icon type="smile" theme="twoTone" /> -->
+          
+          <a-tag color="#2db7f5" @click="changePath(index)">변경</a-tag>
+          <a-tag color="#f50" @click="removePath(index)">삭제</a-tag>
+          <!-- <a-icon type="edit" theme="twoTone" twoToneColor="blue" />
+          <a-icon type="delete" theme="twoTone" twoToneColor="red" /> -->
+        </span>
+      </div>
+      <div style="width: 100%">
+        <span v-html="destFolder.dirPath" class="pathView" />
+      </div>
+    </a-row>
+    <a-row style="text-align: center">
+      <!-- TODO: src폴더 선택 전에는 Disable -->
+      <a-button @click="hanldeClickNewDir" size="small" type="primary">
+        <a-icon type="plus-circle" />
+        경로 추가
+      </a-button>
+    </a-row>
+
+
+
+
+    <!-- <b-row v-for="(destFolder, index) in destFolders" :key="index" class="destBtn">
+      <div style="width: 100%">
+        <b-button @click="moveImage(destFolder.dirPath)" variant="primary" v-html="destFolder.dirName" />
+      </div>
+      <div style="width: 100%">
+        <span v-html="destFolder.dirPath" class="pathView" />
+      </div>
     </b-row>
     <b-row style="justify-content: center;">
-      <!-- <b-col> -->
-        <!-- TODO: src폴더 선택 전에는 Disable -->
-        <b-button @click="hanldeClickNewDir" variant="secondary" size="sm">경로 추가</b-button>
-      <!-- </b-col> -->
-    </b-row>
+      <b-button @click="hanldeClickNewDir" variant="secondary" size="sm">경로 추가</b-button>
+    </b-row> -->
   </div>
 </template>
 
@@ -61,7 +76,8 @@ export default {
       'setSourceFolderPath',
       'setImageNames',
       'setCurrentIndex',
-      'setNumberOfFiles_complete'
+      'setNumberOfFiles_complete',
+      'changeDestFolders',
     ]),
     test() {
       const apath = dialog.showOpenDialog({
@@ -116,11 +132,6 @@ export default {
       // TODO: 폴더경로 중복검사
       // TODO: src 폴더랑 경로가 같으면 안됨
       this.addDestFolders({dirPath, dirName})
-
-
-      setTimeout(() => {
-        console.dir(this.destFolders)
-      }, 1000)
     },
     // @dev: 목적지 폴더 경로를 인자로 받아서 그 위치에 파일 이동
     moveImage(paramDestpath) {
@@ -169,6 +180,44 @@ export default {
       //   console.info('file move Success!')
       //   console.info(srcPath + '==>' + destPath)
       // })
+    },
+    changePath(index) {
+      console.log('changePath', index)
+      // TODO: 구현
+      // TODO: openDialog 코드가 중복되니까 mixin 처리하기
+      let dirPath = dialog.showOpenDialog({
+        properties: ['openDirectory']
+      })
+
+      // 예외처리
+      if(dirPath === undefined) {
+        this.noti('warning', '폴더를 선택하세요')
+        return
+      }
+
+      dirPath = dirPath[0]
+
+      const dirName = path.basename(dirPath)
+
+
+      const payload = {
+        index,
+        data: {
+          dirName,
+          dirPath
+        }
+      }
+
+      // TODO: 음 store state를 직접만지네 수정하자.
+      const ret = this.destFolders.splice(index, 1, {dirPath, dirName});
+
+    },
+    removePath(index) {
+      console.log('removePath', index)
+      // TODO: 음 store state를 직접만지네 수정하자.
+      const ret = this.destFolders.splice(index, 1);
+      // TODO: 제거하기전에 confirm하기
+      // TODO 제거 Noti 띄우기
     }
   }
 }
@@ -184,12 +233,34 @@ export default {
 .destBtn {
   margin-bottom: 20px;
   & button {
-    min-width: 100px;
-    max-width: 100px;
+    min-width: 120px;
+    max-width: 120px;
 
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
+}
+.iconContainer {
+  & > i {
+    font-size: 1.5rem;
+    border-radius: 50%;
+    // border-color: #1890ff;
+    // background-color: rgb(230, 247, 255);
+    
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+.moveContainer {
+  // width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.moveBtn {
+  background-color: #87d068;
+  border-color: lightsteelblue;
+  color: darkgreen;
 }
 </style>

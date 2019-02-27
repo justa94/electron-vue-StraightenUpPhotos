@@ -1,13 +1,14 @@
 /* eslint-disable */
 // TODO: Folder를 Directory로 바꿀까?
 const state = {
-  currentImagePath: 'https://via.placeholder.com/700x800', // 현재 이미지파일 경로
+  currentImagePath: '', // 현재 이미지파일 경로
   imageNames: [], // 이미지 경로들
   sourceFolderPath: '', // 정리 대상 폴더
   destFolders: [], // 이동하게될 목적 폴더들
   numberOfFiles_origin: 0, // 이미지 파일 갯수 (전체)
   numberOfFiles_complete: 0, // 처리된 이미지 파일 갯수
   currentIndex: 0, // 현재 배열 인덱스
+  srcSelected: false, // src 폴더 선택되었는지 여부
 }
 
 const getters = {
@@ -18,6 +19,7 @@ const getters = {
   numberOfFiles_origin: () => state.numberOfFiles_origin,
   numberOfFiles_complete: () => state.numberOfFiles_complete,
   currentIndex: () => state.currentIndex,
+  srcSelected: () => state.srcSelected,
 }
 
 const actions = {
@@ -35,6 +37,10 @@ const actions = {
     // state.destFolers = payload
     state.destFolders.push(payload)
   },
+  changeDestFolders({ commit }, payload) {
+    console.log('d')
+    state.destFolders[payload.index] = payload.data
+  },
   setNumberOfFiles_origin({ commit }, payload) {
     state.numberOfFiles_origin = payload
   },
@@ -43,6 +49,9 @@ const actions = {
   },
   setCurrentIndex({ commit }, payload) {
     state.currentIndex = payload
+  },
+  setSrcSelected({ commit }, payload) {
+    state.srcSelected = payload
   },
 }
 

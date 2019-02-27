@@ -1,19 +1,17 @@
 <template>
   <div>
-    <Navbar />
-    <b-container fluid >
-      <b-row class="photoContent">
-        <b-col cols="2">
+      <Navbar />
+      <a-row type="flex" justify="space-between" :gutter="0" class="photoContent">
+        <a-col :span="5">
           <SidebarLeft />
-        </b-col>
-        <b-col style="text-align: center;">
+        </a-col>
+        <a-col :span="14">
           <PhotoZone />
-        </b-col>
-        <b-col cols="4">
+        </a-col>
+        <a-col :span="5">
           <SidebarRight />
-        </b-col>
-      </b-row>
-    </b-container>
+        </a-col>
+      </a-row>
     
     <!-- VueX 테스트 -->
     <!-- <div>
@@ -66,7 +64,7 @@ export default {
 
 <style scoped>
 .photoContent {
-  height: 93vh;
+  height: 90vh;
   background: #1CD8D2;  /* fallback for old browsers */
   background: -webkit-linear-gradient(to right, #93EDC7, #1CD8D2);  /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to right, #93EDC7, #1CD8D2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
