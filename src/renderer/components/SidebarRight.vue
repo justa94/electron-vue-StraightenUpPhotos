@@ -4,15 +4,9 @@
       <div class="moveContainer">
         <!-- TODO: hover, focus 시에 color 변경 -->
         <a-button @click="moveImage(destFolder.dirPath)" v-html="destFolder.dirName" class="moveBtn" type="primary" size="large" />
-        <!-- TODO: icon으로 수정, 삭제 버튼 만들기 -->
         <span class="iconContainer">
-          <!-- <img src="@/assets/image/edit.svg" /> -->
-          <!-- <a-icon type="smile" theme="twoTone" /> -->
-          
           <a-tag color="#2db7f5" @click="changePath(index)">변경</a-tag>
           <a-tag color="#f50" @click="removePath(index)">삭제</a-tag>
-          <!-- <a-icon type="edit" theme="twoTone" twoToneColor="blue" />
-          <a-icon type="delete" theme="twoTone" twoToneColor="red" /> -->
         </span>
       </div>
       <div style="width: 100%">
@@ -70,6 +64,9 @@ export default {
   },
   data() {
     return {
+      ModalText: 'Content of the modal',
+      visible: false,
+      confirmLoading: false,
     }
   },
   methods: {
@@ -83,41 +80,6 @@ export default {
       'changeDestFolders',
       'popDestFolders',
     ]),
-    test() {
-      const apath = dialog.showOpenDialog({
-        filters: [
-          { name: 'Image', extensions: ['jpg', 'png'] }
-        ]
-      })
-      if(apath === undefined) {
-        console.warn('unde')
-        return
-      }
-
-      console.log('path?', apath)
-
-      this.setCurrentImagePath(apath[0])
-
-      return
-      console.log('handleClickNewDir')
-      let path = dialog.showOpenDialog({
-        properties: ['openDirectory']
-      })
-
-      console.log(path)
-      if(path === undefined) {
-        console.warn('unde')
-        return
-      }
-      this.folder = fs.readdirSync(path[0])
-      
-      console.log(this.folder.length)
-      console.log(this.folder[3])
-      
-      _.forEach(this.folder, (fo) => {
-        console.log(path[0] + '\\' + fo)
-      })
-    },
     hanldeClickNewDir() {
       const dirPath = this.openDialog()
       const dirName = path.basename(dirPath)
@@ -193,6 +155,8 @@ export default {
       this.popDestFolders(index)
 
       // TODO: 제거하기전에 confirm하기
+      /* antd에서 popconfirm, modal등이 동작하지 않음.
+         bootstrap꺼는 잘 동작한다.. */
       // TODO 제거 Noti 띄우기
     }
   }
@@ -238,5 +202,11 @@ export default {
   background-color: #87d068;
   border-color: lightsteelblue;
   color: darkgreen;
+
+  &:hover, &:focus {
+    background-color: hsl(102, 87%, 44%);
+    border-color: lightsteelblue;
+    color: hsl(229, 77%, 54%);
+  }
 }
 </style>
