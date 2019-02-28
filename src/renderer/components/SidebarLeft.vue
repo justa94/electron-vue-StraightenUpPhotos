@@ -1,21 +1,221 @@
 <template>
   <div>
-    SidebarLeft
+    <h2 style="text-align: center;">History <a-button @click="test">T</a-button></h2>
+    <!-- TODO: @media로 사이즈 줄어들면 안보이게하기 -->
+    <div>
+      <a-list
+        :dataSource="history"
+        style="height: 800px; overflow: auto;"
+        bordered
+      >
+        <a-list-item slot="renderItem" slot-scope="item, index">
+          <!-- <a-list-item-meta :description="item.email"> -->
+          <a-list-item-meta>
+            <!-- <a slot="title" :href="item.href">{{item.name.last}}</a> -->
+            <!-- <a-avatar slot="avatar" shape="square" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" /> -->
+            
+            <!-- <a-avatar slot="avatar" shape="square" :size="120" src="C:\Users\user\Desktop\workspace\prac\projects\electron\electron-vue-StraightenUpPhotos\src\renderer\assets\10000img\img\rimg4aea56.jpg" /> -->
+            <a-avatar slot="avatar" shape="square" :size="120" :src="item.destPath" />
+          </a-list-item-meta>
+          <div>
+            <div>--> {{ item.destFolderName }}</div>
+            <a-button @click="restore(item, index)" type="default">복원</a-button>
+          </div>
+        </a-list-item>
+      </a-list>
+
+
+
+
+
+
+
+      <!-- <a-list
+        :dataSource="sample"
+        style="height: 800px; overflow: auto;"
+        bordered
+      >
+        <a-list-item slot="renderItem" slot-scope="item, index">
+          <a-list-item-meta :description="item.email">
+            <a slot="title" :href="item.href">{{item.name.last}}</a>
+            <a-avatar slot="avatar" shape="square" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+          </a-list-item-meta>
+        </a-list-item>
+      </a-list> -->
+    </div>
   </div>
 </template>
 
 <script>
 /* eslint-disable */
+import { mapGetters, mapActions } from 'vuex'
+import fs from 'fs'
+import mixin from '@/mixin'
+
 export default {
   name: 'SidebarLeft',
   components: { },
+  mixins: [mixin],
   computed: {
+    ...mapGetters([
+      'history',
+      'imageNames',
+      'numberOfFiles_complete'
+    ])
   },
   data() {
     return {
+      sample: [
+        {
+          email: 'email A',
+          name: {
+            last: 'last A'
+          }
+        },
+        {
+          email: 'email B',
+          name: {
+            last: 'last B'
+          }
+        },
+        {
+          email: 'email B',
+          name: {
+            last: 'last B'
+          }
+        },
+        {
+          email: 'email B',
+          name: {
+            last: 'last B'
+          }
+        },
+        {
+          email: 'email B',
+          name: {
+            last: 'last B'
+          }
+        },
+        {
+          email: 'email B',
+          name: {
+            last: 'last B'
+          }
+        },
+        {
+          email: 'email B',
+          name: {
+            last: 'last B'
+          }
+        },
+        {
+          email: 'email B',
+          name: {
+            last: 'last B'
+          }
+        },
+        {
+          email: 'email B',
+          name: {
+            last: 'last B'
+          }
+        },
+        {
+          email: 'email B',
+          name: {
+            last: 'last B'
+          }
+        },
+        {
+          email: 'email B',
+          name: {
+            last: 'last B'
+          }
+        },
+        {
+          email: 'email B',
+          name: {
+            last: 'last B'
+          }
+        },
+        {
+          email: 'email B',
+          name: {
+            last: 'last B'
+          }
+        },
+        {
+          email: 'email B',
+          name: {
+            last: 'last B'
+          }
+        },
+        {
+          email: 'email B',
+          name: {
+            last: 'last B'
+          }
+        },
+        {
+          email: 'email B',
+          name: {
+            last: 'last B'
+          }
+        },
+      ],
     }
   },
   methods: {
+    ...mapActions([
+      'setNumberOfFiles_complete',
+      'popHistory'
+    ]),
+    test() {
+      this.sample.pop();
+    },
+    restore(item, index) {
+      const { srcPath, destPath, imageName } = item
+
+      // 복원작업 dest -> src 이동
+      try {
+        fs.renameSync(destPath, srcPath);
+        console.log('success!')
+        // this.noti('success', '파일 복원 성공')
+      }
+      catch(e) {
+        console.error(e)
+        console.error('pbw try error')
+        this.noti('error', '에러!')
+        return
+      }
+
+      // imageNames에 추가 (앞에 추가함)
+      console.log('imageNames 원래 길이', this.imageNames.length)
+      console.log('prev ImageNames', this.imageNames)
+      console.log('imagename', imageName)
+      let a = this.imageNames.unshift(imageName)
+      console.log('imageNames 길이', a)
+      console.log('next ImageNames', this.imageNames)
+
+      // 처리된 이미지 파일 갯수 감소
+      // NaN뜨고 먼가 제대로 안된다.
+      this.setNumberOfFiles_complete(this.numberOfFiles_complete - 1)
+
+      // history pop
+      try {
+        this.popHistory(index)
+      }
+      catch(e) {
+        console.log('pbw history err')
+      }
+      finally {
+        console.log('------------------------')
+        console.log('history')
+        console.log(this.history)
+        console.log('------------------------')
+      }
+      
+    },
   }
 }
 </script>

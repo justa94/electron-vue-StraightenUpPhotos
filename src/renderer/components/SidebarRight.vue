@@ -3,7 +3,7 @@
     <a-row v-for="(destFolder, index) in destFolders" :key="index" class="destBtn">
       <div class="moveContainer">
         <!-- TODO: hover, focus 시에 color 변경 -->
-        <a-button @click="moveImage(destFolder.dirPath)" v-html="destFolder.dirName" class="moveBtn" type="primary" size="large" />
+        <a-button @click="moveImage(destFolder)" v-html="destFolder.dirName" class="moveBtn" type="primary" size="large" />
         <span class="iconContainer">
           <a-tag color="#2db7f5" @click="changePath(index)">변경</a-tag>
           <a-tag color="#f50" @click="removePath(index)">삭제</a-tag>
@@ -79,31 +79,54 @@ export default {
       'setNumberOfFiles_complete',
       'changeDestFolders',
       'popDestFolders',
+      'pushHistory',
     ]),
     hanldeClickNewDir() {
       const dirPath = this.openDialog()
       const dirName = path.basename(dirPath)
 
-      // TODO: 폴더경로 중복검사
-      // TODO: src 폴더랑 경로가 같으면 안됨
+      // 폴더경로 중복검사
+      for(let i=0; i<this.destFolders.length; i++) {
+        if(this.destFolders[i].dirPath === dirPath) {
+          this.noti('warning', '경로가 같습니다')
+          return
+        }
+      }
+
+      // src 폴더랑 경로가 같으면 안됨
+      // 개발용도로 일단 주석처리
+      // if(this.sourceFolderPath === dirPath) {
+      //   this.noti('warning', '경로가 같습니다')
+      //   return
+      // }
+
       this.addDestFolders({dirPath, dirName})
     },
     // @dev: 목적지 폴더 경로를 인자로 받아서 그 위치에 파일 이동
-    moveImage(paramDestpath) {
-      const srcPath = this.sourceFolderPath + '\\' + this.imageNames[this.currentIndex]
-      const destPath = paramDestpath + '\\' + this.imageNames[this.currentIndex]
-      
-      console.log('src: ', srcPath)
-      console.log('dest: ', destPath)
+    moveImage(paramdestFolder) {
+      // 예외처리
+      if(this.imageNames.length <= 0) {
+        this.noti('warning', 'src 폴더가 선택되지 않았습니다.')
+        return
+      }
 
+      const paramDestpath = paramdestFolder.dirPath
+      const paramDestName = paramdestFolder.dirName
+      const imageName = this.imageNames[this.currentIndex]
+
+      const srcPath = this.sourceFolderPath + '\\' + imageName
+      const destPath = paramDestpath + '\\' + imageName
+      
       // 파일 이동
       try {
         fs.renameSync(srcPath, destPath);
         console.log('success!')
+        // this.noti('success', '파일 이동 성공')
       }
       catch(e) {
         console.error(e)
         console.error('pbw try error')
+        this.noti('error', '에러!')
         return
       }
 
@@ -111,30 +134,18 @@ export default {
       // Photo 변경, CurrentIndex 변경
 
       // 배열 갈아치운다.
-      console.log('슬라이스 전1: ', this.imageNames)
-      // const a = _.slice(this.imageNames, this.currentIndex, this.currentIndex+1);
-      // array를 직접적으로 변경시킨다.
-      // 반환되는 변수는 제거한 변수를 반환한다.
       const a = this.imageNames.splice(this.currentIndex, 1);
-      console.log('슬라이스 전2: ', this.imageNames)
-      console.log('슬라이스 후:', a);
 
       // 처리된 이미지 파일 갯수 증가
       this.setNumberOfFiles_complete(this.numberOfFiles_complete + 1)
-      
 
-
-
-      // fs.rename(srcPath, destPath, (err) => {
-      //   if(err) {
-      //     console.error(err)
-      //     console.error('pbw error!')
-      //     return
-      //   }
-        
-      //   console.info('file move Success!')
-      //   console.info(srcPath + '==>' + destPath)
-      // })
+      // TODO: history에 추가
+      this.pushHistory({
+        srcPath,
+        destPath,
+        destFolderName: paramDestName,
+        imageName
+      })
     },
     changePath(index) {
       const dirPath = this.openDialog()
@@ -157,7 +168,6 @@ export default {
       // TODO: 제거하기전에 confirm하기
       /* antd에서 popconfirm, modal등이 동작하지 않음.
          bootstrap꺼는 잘 동작한다.. */
-      // TODO 제거 Noti 띄우기
     }
   }
 }

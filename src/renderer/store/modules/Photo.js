@@ -9,6 +9,7 @@ const state = {
   numberOfFiles_complete: 0, // 처리된 이미지 파일 갯수
   currentIndex: 0, // 현재 배열 인덱스
   srcSelected: false, // src 폴더 선택되었는지 여부
+  history: [],
 }
 
 const getters = {
@@ -20,6 +21,7 @@ const getters = {
   numberOfFiles_complete: () => state.numberOfFiles_complete,
   currentIndex: () => state.currentIndex,
   srcSelected: () => state.srcSelected,
+  history: () => state.history,
 }
 
 const actions = {
@@ -38,7 +40,6 @@ const actions = {
     state.destFolders.push(payload)
   },
   changeDestFolders({ commit }, payload) {
-    console.log('d')
     state.destFolders.splice(payload.index, 1, payload.data);
     // state.destFolders[payload.index] = payload.data
   },
@@ -56,6 +57,12 @@ const actions = {
   },
   setSrcSelected({ commit }, payload) {
     state.srcSelected = payload
+  },
+  pushHistory({ commit }, payload) {
+    state.history.push(payload)
+  },
+  popHistory({ commit }, index) {
+    state.history.splice(index, 1);
   },
 }
 
