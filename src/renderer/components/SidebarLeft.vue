@@ -19,7 +19,8 @@
           </a-list-item-meta>
           <div>
             <div>--> {{ item.destFolderName }}</div>
-            <a-button @click="restore(item, index)" type="default">복원</a-button>
+            <!-- <a-button @click="restore(item, index)" type="default">복원</a-button> -->
+            <a-button @click="beforeRestore(item, index)" type="default">복원</a-button>
           </div>
         </a-list-item>
       </a-list>
@@ -173,6 +174,13 @@ export default {
     ]),
     test() {
       this.sample.pop();
+    },
+    beforeRestore(item, index) {
+      this.setSpinning(true)
+      setTimeout(() => {
+        this.restore(item, index)
+        this.setSpinning(false)
+      }, 50);
     },
     restore(item, index) {
       const { srcPath, destPath, imageName } = item

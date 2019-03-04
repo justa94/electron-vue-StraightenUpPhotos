@@ -3,7 +3,8 @@
     <a-row v-for="(destFolder, index) in destFolders" :key="index" class="destBtn">
       <div class="moveContainer">
         <!-- TODO: hover, focus 시에 color 변경 -->
-        <a-button @click="moveImage(destFolder)" v-html="destFolder.dirName" class="moveBtn" type="primary" size="large" />
+        <!-- <a-button @click="moveImage(destFolder)" v-html="destFolder.dirName" class="moveBtn" type="primary" size="large" /> -->
+        <a-button @click="beforeMoveImage(destFolder)" v-html="destFolder.dirName" class="moveBtn" type="primary" size="large" />
         <span class="iconContainer">
           <a-tag color="#2db7f5" @click="changePath(index)">변경</a-tag>
           <a-tag color="#f50" @click="removePath(index)">삭제</a-tag>
@@ -15,8 +16,8 @@
     </a-row>
     <a-row style="text-align: center">
       <!-- TODO: src폴더 선택 전에는 Disable -->
-      <!-- <a-button @click="hanldeClickNewDir" size="small" type="primary"> -->
-      <a-button @click="test" size="small" type="primary">
+      <a-button @click="hanldeClickNewDir" size="small" type="primary">
+      <!-- <a-button @click="test" size="small" type="primary"> -->
         <a-icon type="plus-circle" />
         경로 추가
       </a-button>
@@ -116,6 +117,13 @@ export default {
 
       this.addDestFolders({dirPath, dirName})
     },
+    beforeMoveImage(paramdestFolder) {
+      this.setSpinning(true)
+      setTimeout(() => {
+        this.moveImage(paramdestFolder)
+        this.setSpinning(false)
+      }, 50);
+    },
     // @dev: 목적지 폴더 경로를 인자로 받아서 그 위치에 파일 이동
     moveImage(paramdestFolder) {
       // 예외처리
@@ -131,51 +139,40 @@ export default {
       const srcPath = this.sourceFolderPath + '\\' + imageName
       const destPath = paramDestpath + '\\' + imageName
 
-      console.log('spin tru2e')
-      this.setSpinning(true)
-
-      setTimeout(() => {
-        console.log("wqeqiu283183123")
+      console.log('cp timer start')
+      // 파일 이동
+      try {
+        fs.renameSync(srcPath, destPath);
+        // fs.copyFileSync(srcPath, destPath);
+        console.log('success!')
+      }
+      catch(e) {
+        console.error(e)
+        console.error('pbw try error')
+        this.noti('error', '에러!')
+        return
+      }
+      finally {
+        console.log('finally')
         this.setSpinning(false)
-      }, 100)
+      }
 
+      // 배열 수정 등 작업해주기
+      // Photo 변경, CurrentIndex 변경
 
-      // setTimeout(() => {
-      //   console.log('cp timer start')
-      //   // 파일 이동
-      //   try {
-      //     // fs.renameSync(srcPath, destPath);
-      //     fs.copyFileSync(srcPath, destPath);
-      //     console.log('success!')
+      // 배열 갈아치운다.
+      this.imageNames.splice(this.currentIndex, 1);
 
-      //     // 배열 수정 등 작업해주기
-      //     // Photo 변경, CurrentIndex 변경
+      // 처리된 이미지 파일 갯수 증가
+      this.setNumberOfFiles_complete(this.numberOfFiles_complete + 1)
 
-      //     // 배열 갈아치운다.
-      //     this.imageNames.splice(this.currentIndex, 1);
-
-      //     // 처리된 이미지 파일 갯수 증가
-      //     this.setNumberOfFiles_complete(this.numberOfFiles_complete + 1)
-
-      //     // TODO: history에 추가
-      //     this.pushHistory({
-      //       srcPath,
-      //       destPath,
-      //       destFolderName: paramDestName,
-      //       imageName
-      //     })
-      //   }
-      //   catch(e) {
-      //     console.error(e)
-      //     console.error('pbw try error')
-      //     this.noti('error', '에러!')
-      //     return
-      //   }
-      //   finally {
-      //     console.log('finally')
-      //     this.setSpinning(false)
-      //   }
-      // }, 100)
+      // TODO: history에 추가
+      this.pushHistory({
+        srcPath,
+        destPath,
+        destFolderName: paramDestName,
+        imageName
+      })
     },
     changePath(index) {
       const dirPath = this.openDialog()
