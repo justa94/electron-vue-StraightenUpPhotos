@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <a-spin size="large" :spinning="spinning"> -->
+    <a-spin size="large" :spinning="spinning">
       <Navbar />
       <a-row type="flex" justify="space-between" :gutter="0" class="photoContent">
         <a-col :span="5">
@@ -13,7 +13,7 @@
           <SidebarRight />
         </a-col>
       </a-row>
-    <!-- </a-spin> -->
+    </a-spin>
 
     
     <!-- VueX 테스트 -->

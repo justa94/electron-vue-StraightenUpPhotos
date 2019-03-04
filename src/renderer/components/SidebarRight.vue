@@ -16,7 +16,7 @@
     <a-row style="text-align: center">
       <!-- TODO: src폴더 선택 전에는 Disable -->
       <!-- <a-button @click="hanldeClickNewDir" size="small" type="primary"> -->
-      <a-button @click="ofi" size="small" type="primary">
+      <a-button @click="test" size="small" type="primary">
         <a-icon type="plus-circle" />
         경로 추가
       </a-button>
@@ -48,13 +48,12 @@ const { dialog } = require('electron').remote
 import fs from 'fs'
 import path from 'path'
 import _ from 'lodash'
-import { setTimeout } from 'timers';
-// import mixin from '@/mixin'
+import mixin from '@/mixin'
 
 export default {
   name: 'SidebarRight',
   components: { },
-  // mixins: [mixin],
+  mixins: [mixin],
   computed: {
     ...mapGetters([
       'currentImagePath',
@@ -84,44 +83,12 @@ export default {
       'pushHistory',
       'setSpinning',
     ]),
-    noti(type, msg, note) {
-      this.$message.info(msg)
-      // this.$notification[type]({
-      //   key: msg,
-      //   message: msg || 'Notification Title',
-      //   description: note || '',
-      // });
+    test() {
+      console.log('test in')
+      setTimeout(() => {
+        console.log('timer in')
+      }, 1200)
     },
-    ofi() {
-      const msg = "asddas";
-      const note = "wqe12"
-      this.$notification['warning']({
-        message: msg || 'Notification Title',
-        description: note || '',
-        placement: "topLeft"
-      });
-    },
-    openDialog() {
-      console.log('mixin opendialog')
-      let dirPath = dialog.showOpenDialog({
-        properties: ['openDirectory']
-      })
-      // 예외처리
-      if(dirPath === undefined) {
-        // this.noti('warning', '폴더를 선택하세요')
-        this.$message.info('폴더를 선택하세요')
-        return
-      }
-
-      dirPath = dirPath[0]
-      return dirPath
-    },
-
-
-
-
-
-
 
 
     hanldeClickNewDir() {
@@ -150,7 +117,7 @@ export default {
       this.addDestFolders({dirPath, dirName})
     },
     // @dev: 목적지 폴더 경로를 인자로 받아서 그 위치에 파일 이동
-    async moveImage(paramdestFolder) {
+    moveImage(paramdestFolder) {
       // 예외처리
       if(this.imageNames.length <= 0) {
         this.noti('warning', 'src 폴더가 선택되지 않았습니다.')
@@ -167,10 +134,10 @@ export default {
       console.log('spin tru2e')
       this.setSpinning(true)
 
-      await setTimeout(() => {
+      setTimeout(() => {
         console.log("wqeqiu283183123")
         this.setSpinning(false)
-      }, 50)
+      }, 100)
 
 
       // setTimeout(() => {

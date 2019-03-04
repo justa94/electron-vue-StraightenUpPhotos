@@ -14,7 +14,6 @@
 <script>
 /* eslint-disable */
 import { mapGetters, mapActions } from 'vuex'
-import { setTimeout } from 'timers';
 import _ from 'lodash'
 
 export default {
