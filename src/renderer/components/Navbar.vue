@@ -1,8 +1,7 @@
 <template>
   <div class="navHeight">
     <div style="flex: 0; text-align: center;">
-      <!-- <a-button @click="getSoucreFolder" class="selectFolder" type="primary"> -->
-      <a-button @click="test" class="selectFolder" type="primary">
+      <a-button @click="getSoucreFolder" class="selectFolder" type="primary">
         <a-icon type="folder" />
         폴더 선택
         <!-- TODO: 아이콘 넣어서 선택전, 선택후 구분하기 -->
@@ -55,6 +54,10 @@ export default {
     //   photo: state => state.Photo
     // })
   },
+  updated() {
+    console.log('updated Navbar')
+    this.checkIsVideo()
+  },
   data() {
     return {
     }
@@ -67,13 +70,18 @@ export default {
       'setCurrentImagePath',
       'setImageNames',
       'setSrcSelected',
+      'setIsVideo',
     ]),
-    test() {
-      this.$message.info('wqewq')
+    checkIsVideo() {
+      const currentImage = this.imageNames[this.currentIndex]
+      const ext = path.extname(currentImage)
+      if(ext === '.mp4') {
+        this.setIsVideo(true)
+      }
+      else {
+        this.setIsVideo(false)
+      }
     },
-
-
-
     getSoucreFolder() {
       // 경로설정 Dialog 오픈
       const dirPath = dialog.showOpenDialog({
@@ -90,22 +98,39 @@ export default {
       // TODO: 반응형으로 만들기위해서 사이즈 줄어들면 폴더 버튼이랑 수량표시 없애기
       let files = fs.readdirSync(dirPath[0])
 
+      console.log('files', files)
+
       const extAllows = [
-        'jpg',
-        'png',
-        'gif',
+        '.jpg',
+        '.png',
+        '.gif',
+        '.mp4',
+        '.webm',
+        '.ogv'
       ]
+
+      // 
+      console.log('-------------------------------------')
+      let test01 = '.mp4'
+      let test01_lodash = _.lowerCase(test01)
+      let test01_basic = test01.toLowerCase(test01)
+      console.log('test01_lodash', test01_lodash)
+      console.log('test01_basic', test01_basic)
+      console.log('-------------------------------------')
+      // 
       
       files = files.filter((file) => {
         const ext = path.extname(file)
 
         for(let i=0; i<extAllows.length; i++) {
-          if(_.lowerCase(ext) === extAllows[i]) {
+          // if(_.lowerCase(ext) === extAllows[i]) {
+          if(ext.toLowerCase() === extAllows[i]) {
             return true
           }
         }
         return false
       })
+      console.log('files2', files)
 
       if(files.length === 0) {
         this.noti('warning', '이미지가 없는 폴더입니다.')

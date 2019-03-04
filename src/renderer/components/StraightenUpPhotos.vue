@@ -3,7 +3,7 @@
     <a-spin size="large" :spinning="spinning">
       <Navbar />
       <a-row type="flex" justify="space-between" :gutter="0" class="photoContent">
-        <a-col :span="5">
+        <a-col :span="5" class="col-SidebarLeft">
           <SidebarLeft />
         </a-col>
         <a-col :span="14">
@@ -81,5 +81,11 @@ export default {
   background: #1CD8D2;  /* fallback for old browsers */
   background: -webkit-linear-gradient(to right, #93EDC7, #1CD8D2);  /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to right, #93EDC7, #1CD8D2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+@media(max-width: 1080px) {
+  .col-SidebarLeft {
+    display: none;
+  }
 }
 </style>

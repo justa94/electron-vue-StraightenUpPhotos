@@ -1,4 +1,5 @@
 - 다중 선택 기능
 - src폴더 선택 안하고 dest폴더 클릭하였을 때 pbw try에러 뜸.
-- moveImage 할때랑 복원할 때 시간이 조금 걸린다 loading 띄우기
-- 동영상 파일일 경우 media태그로 교체
+- 동영상 파일일 경우 media태그로 교체 (history도?)
+ - src 선택, 복원, imageMove, prev, next
+- @media태그로 사이즈별로 UI 조정하기

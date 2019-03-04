@@ -11,6 +11,7 @@ const state = {
   srcSelected: false, // src 폴더 선택되었는지 여부
   history: [],
   spinning: false, // 파일 이동중 spin
+  isVideo: false,
 }
 
 const getters = {
@@ -24,6 +25,7 @@ const getters = {
   srcSelected: () => state.srcSelected,
   history: () => state.history,
   spinning: () => state.spinning,
+  isVideo: () => state.isVideo,
 }
 
 const actions = {
@@ -67,8 +69,10 @@ const actions = {
     state.history.splice(index, 1)
   },
   setSpinning({ commit }, payload) {
-    console.log('store spinning', payload)
     state.spinning = payload
+  },
+  setIsVideo({ commit }, payload) {
+    state.isVideo = payload
   },
 }
 
