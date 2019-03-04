@@ -168,7 +168,8 @@ export default {
   methods: {
     ...mapActions([
       'setNumberOfFiles_complete',
-      'popHistory'
+      'popHistory',
+      'setSpinning',
     ]),
     test() {
       this.sample.pop();
@@ -178,6 +179,7 @@ export default {
 
       // 복원작업 dest -> src 이동
       try {
+        this.setSpinning(true)
         fs.renameSync(destPath, srcPath);
         console.log('success!')
         // this.noti('success', '파일 복원 성공')
@@ -187,6 +189,10 @@ export default {
         console.error('pbw try error')
         this.noti('error', '에러!')
         return
+      }
+      finally {
+        console.log('history finally')
+        this.setSpinning(false)
       }
 
       // imageNames에 추가 (앞에 추가함)
@@ -198,7 +204,6 @@ export default {
       console.log('next ImageNames', this.imageNames)
 
       // 처리된 이미지 파일 갯수 감소
-      // NaN뜨고 먼가 제대로 안된다.
       this.setNumberOfFiles_complete(this.numberOfFiles_complete - 1)
 
       // history pop

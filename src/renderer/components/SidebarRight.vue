@@ -15,11 +15,14 @@
     </a-row>
     <a-row style="text-align: center">
       <!-- TODO: src폴더 선택 전에는 Disable -->
-      <a-button @click="hanldeClickNewDir" size="small" type="primary">
+      <!-- <a-button @click="hanldeClickNewDir" size="small" type="primary"> -->
+      <a-button @click="ofi" size="small" type="primary">
         <a-icon type="plus-circle" />
         경로 추가
       </a-button>
     </a-row>
+    <a-spin :spinning="sp">
+    </a-spin>
 
 
 
@@ -46,12 +49,12 @@ import fs from 'fs'
 import path from 'path'
 import _ from 'lodash'
 import { setTimeout } from 'timers';
-import mixin from '@/mixin'
+// import mixin from '@/mixin'
 
 export default {
   name: 'SidebarRight',
   components: { },
-  mixins: [mixin],
+  // mixins: [mixin],
   computed: {
     ...mapGetters([
       'currentImagePath',
@@ -59,14 +62,13 @@ export default {
       'sourceFolderPath',
       'imageNames',
       'currentIndex',
-      'numberOfFiles_complete'
+      'numberOfFiles_complete',
+      'spinning',
     ])
   },
   data() {
     return {
-      ModalText: 'Content of the modal',
-      visible: false,
-      confirmLoading: false,
+      sp: false
     }
   },
   methods: {
@@ -80,9 +82,54 @@ export default {
       'changeDestFolders',
       'popDestFolders',
       'pushHistory',
+      'setSpinning',
     ]),
+    noti(type, msg, note) {
+      this.$message.info(msg)
+      // this.$notification[type]({
+      //   key: msg,
+      //   message: msg || 'Notification Title',
+      //   description: note || '',
+      // });
+    },
+    ofi() {
+      const msg = "asddas";
+      const note = "wqe12"
+      this.$notification['warning']({
+        message: msg || 'Notification Title',
+        description: note || '',
+        placement: "topLeft"
+      });
+    },
+    openDialog() {
+      console.log('mixin opendialog')
+      let dirPath = dialog.showOpenDialog({
+        properties: ['openDirectory']
+      })
+      // 예외처리
+      if(dirPath === undefined) {
+        // this.noti('warning', '폴더를 선택하세요')
+        this.$message.info('폴더를 선택하세요')
+        return
+      }
+
+      dirPath = dirPath[0]
+      return dirPath
+    },
+
+
+
+
+
+
+
+
     hanldeClickNewDir() {
       const dirPath = this.openDialog()
+      if(dirPath === undefined) {
+        console.log('dirPath unde')
+        return
+      }
       const dirName = path.basename(dirPath)
 
       // 폴더경로 중복검사
@@ -103,7 +150,7 @@ export default {
       this.addDestFolders({dirPath, dirName})
     },
     // @dev: 목적지 폴더 경로를 인자로 받아서 그 위치에 파일 이동
-    moveImage(paramdestFolder) {
+    async moveImage(paramdestFolder) {
       // 예외처리
       if(this.imageNames.length <= 0) {
         this.noti('warning', 'src 폴더가 선택되지 않았습니다.')
@@ -116,36 +163,52 @@ export default {
 
       const srcPath = this.sourceFolderPath + '\\' + imageName
       const destPath = paramDestpath + '\\' + imageName
-      
-      // 파일 이동
-      try {
-        fs.renameSync(srcPath, destPath);
-        console.log('success!')
-        // this.noti('success', '파일 이동 성공')
-      }
-      catch(e) {
-        console.error(e)
-        console.error('pbw try error')
-        this.noti('error', '에러!')
-        return
-      }
 
-      // 배열 수정 등 작업해주기
-      // Photo 변경, CurrentIndex 변경
+      console.log('spin tru2e')
+      this.setSpinning(true)
 
-      // 배열 갈아치운다.
-      const a = this.imageNames.splice(this.currentIndex, 1);
+      await setTimeout(() => {
+        console.log("wqeqiu283183123")
+        this.setSpinning(false)
+      }, 50)
 
-      // 처리된 이미지 파일 갯수 증가
-      this.setNumberOfFiles_complete(this.numberOfFiles_complete + 1)
 
-      // TODO: history에 추가
-      this.pushHistory({
-        srcPath,
-        destPath,
-        destFolderName: paramDestName,
-        imageName
-      })
+      // setTimeout(() => {
+      //   console.log('cp timer start')
+      //   // 파일 이동
+      //   try {
+      //     // fs.renameSync(srcPath, destPath);
+      //     fs.copyFileSync(srcPath, destPath);
+      //     console.log('success!')
+
+      //     // 배열 수정 등 작업해주기
+      //     // Photo 변경, CurrentIndex 변경
+
+      //     // 배열 갈아치운다.
+      //     this.imageNames.splice(this.currentIndex, 1);
+
+      //     // 처리된 이미지 파일 갯수 증가
+      //     this.setNumberOfFiles_complete(this.numberOfFiles_complete + 1)
+
+      //     // TODO: history에 추가
+      //     this.pushHistory({
+      //       srcPath,
+      //       destPath,
+      //       destFolderName: paramDestName,
+      //       imageName
+      //     })
+      //   }
+      //   catch(e) {
+      //     console.error(e)
+      //     console.error('pbw try error')
+      //     this.noti('error', '에러!')
+      //     return
+      //   }
+      //   finally {
+      //     console.log('finally')
+      //     this.setSpinning(false)
+      //   }
+      // }, 100)
     },
     changePath(index) {
       const dirPath = this.openDialog()

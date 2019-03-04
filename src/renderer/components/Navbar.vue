@@ -1,7 +1,8 @@
 <template>
   <div class="navHeight">
     <div style="flex: 0; text-align: center;">
-      <a-button @click="getSoucreFolder" class="selectFolder" type="primary">
+      <!-- <a-button @click="getSoucreFolder" class="selectFolder" type="primary"> -->
+      <a-button @click="test" class="selectFolder" type="primary">
         <a-icon type="folder" />
         폴더 선택
         <!-- TODO: 아이콘 넣어서 선택전, 선택후 구분하기 -->
@@ -67,6 +68,12 @@ export default {
       'setImageNames',
       'setSrcSelected',
     ]),
+    test() {
+      this.$message.info('wqewq')
+    },
+
+
+
     getSoucreFolder() {
       // 경로설정 Dialog 오픈
       const dirPath = dialog.showOpenDialog({

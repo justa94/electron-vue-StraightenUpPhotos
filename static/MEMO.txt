@@ -1,0 +1,11 @@
+트러블 슈팅
+
+electron + vue + ant-design-vue 를 사용하던 중에
+notification 등을 사용 할 때에
+console에 $attrs is readonly, $listeners is readonly 빨간 콘솔내용이 떴다.
+구글링하여 해결한 방법은
+webpack.renderer.config.js 파일을 수정하는 것이다.
+
+let whiteListedModules = ['vue'] 부분을
+let whiteListedModules = ['vue', 'ant-design-vue'] 로 바꿔준다.
+만약 다른부분 (Vuetify, element-ui) 등이 문제라면 그 이름을 넣어주면 될 듯하다.

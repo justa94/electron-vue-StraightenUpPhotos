@@ -10,6 +10,7 @@ const state = {
   currentIndex: 0, // 현재 배열 인덱스
   srcSelected: false, // src 폴더 선택되었는지 여부
   history: [],
+  spinning: false, // 파일 이동중 spin
 }
 
 const getters = {
@@ -22,6 +23,7 @@ const getters = {
   currentIndex: () => state.currentIndex,
   srcSelected: () => state.srcSelected,
   history: () => state.history,
+  spinning: () => state.spinning,
 }
 
 const actions = {
@@ -62,7 +64,11 @@ const actions = {
     state.history.push(payload)
   },
   popHistory({ commit }, index) {
-    state.history.splice(index, 1);
+    state.history.splice(index, 1)
+  },
+  setSpinning({ commit }, payload) {
+    console.log('store spinning', payload)
+    state.spinning = payload
   },
 }
 

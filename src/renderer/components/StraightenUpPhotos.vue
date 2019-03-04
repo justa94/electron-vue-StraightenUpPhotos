@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- <a-spin size="large" :spinning="spinning"> -->
       <Navbar />
       <a-row type="flex" justify="space-between" :gutter="0" class="photoContent">
         <a-col :span="5">
@@ -12,6 +13,8 @@
           <SidebarRight />
         </a-col>
       </a-row>
+    <!-- </a-spin> -->
+
     
     <!-- VueX 테스트 -->
     <!-- <div>
@@ -33,6 +36,7 @@ import Navbar from '@/components/Navbar'
 import SidebarLeft from '@/components/SidebarLeft'
 import SidebarRight from '@/components/SidebarRight'
 import PhotoZone from '@/components/PhotoZone'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'StraightenUpPhotos',
@@ -43,9 +47,18 @@ export default {
     PhotoZone
   },
   computed: {
+    ...mapGetters([
+      'spinning'
+    ]),
     getMy() {
       return this.$store.getters.my
     }
+  },
+  beforeUpdate() {
+    console.log('before update', this.spinning)
+  },
+  updated() {
+    console.log('updated', this.spinning)
   },
   data() {
     return {

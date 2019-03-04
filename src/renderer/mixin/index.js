@@ -3,10 +3,12 @@ const { dialog } = require('electron').remote
 var mixin = {
   methods: {
     noti(type, msg, note) {
-      this.$notification[type]({
-        message: msg || 'Notification Title',
-        description: note || '',
-      });
+      this.$message.info(msg)
+      // this.$notification[type]({
+      //   key: msg,
+      //   message: msg || 'Notification Title',
+      //   description: note || '',
+      // });
     },
     openDialog() {
       console.log('mixin opendialog')
