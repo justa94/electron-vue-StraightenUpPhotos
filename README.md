@@ -1,3 +1,3 @@
 # electron-vue-StraightenUpPhotos
 
-boilerplate URL: https://github.com/bradstewart/electron-boilerplate-vue
+boilerplate URL: https://github.com/SimulatedGREG/electron-vue
