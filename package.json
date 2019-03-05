@@ -1,5 +1,5 @@
 {
-  "name": "my-project",
+  "name": "StraightenUpPhotos",
   "version": "0.0.1",
   "author": "bwpark <bwpark@dgexcrypto.io>",
   "description": "An electron-vue project",
@@ -22,7 +22,7 @@
     "postinstall": "npm run lint:fix"
   },
   "build": {
-    "productName": "my-project",
+    "productName": "StraightenUpPhotos",
     "appId": "com.example.yourapp",
     "directories": {
       "output": "build"
