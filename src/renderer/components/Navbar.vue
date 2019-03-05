@@ -1,26 +1,18 @@
 <template>
   <div class="navHeight">
-    <div style="flex: 0; text-align: center;">
+    <div style="flex: 0; text-align: center;" class="selectFolderContainer">
       <a-button @click="getSoucreFolder" class="selectFolder" type="primary">
         <a-icon type="folder" />
         폴더 선택
-        <!-- TODO: 아이콘 넣어서 선택전, 선택후 구분하기 -->
       </a-button>
       <div>
         <span v-html="sourceFolderPath" class="pathView" />
       </div>
     </div>
-    <!-- <div> -->
-      <!-- <h1>Photo</h1> -->
       <h3 style="margin: auto 0; margin-right: 12%;" class="imageNameContainer">{{ imageNames[currentIndex] }}</h3>
-    <!-- </div> -->
-    
-    <h2 v-if="srcSelected" style="margin: auto 0;">
-      <!-- <div style="font-size: 1rem">처리량</div>
-      {{ numberOfFiles_complete }} / {{ numberOfFiles_origin }} -->
-      <!-- TODO: 폴더 선택 안했을 경우는 안보이게 처리 -->
-      {{ remainFiles !== 0 ? currentIndex+1 : 0 }} / {{ remainFiles }}
-    </h2>
+      <h2 v-if="srcSelected" style="margin: auto 0;">
+        {{ remainFiles !== 0 ? currentIndex+1 : 0 }} / {{ remainFiles }}
+      </h2>
   </div>
 </template>
 
@@ -178,5 +170,11 @@ export default {
 
 .pathView {
   font-size: 0.7rem;
+}
+
+@media(max-width: 700px) {
+  .selectFolderContainer {
+    display: none;
+  }
 }
 </style>

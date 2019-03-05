@@ -170,8 +170,6 @@ export default {
         destFolderName: paramDestName,
         imageName
       })
-
-      // TODO: 마지막 파일 까지 이동했을 경우 처리해준다.
     },
     changePath(index) {
       const dirPath = this.openDialog()

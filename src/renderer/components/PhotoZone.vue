@@ -1,4 +1,5 @@
 <template>
+<!-- TODO: 드래그 앤 드랍 -->
   <div class="photoZone">
     <div class="directionContainer">
       <img src="@/assets/image/prev.svg" class="direction" @click="imageBack" />
@@ -43,6 +44,33 @@ export default {
   },
   
   mounted() {
+    let drag = document.getElementsByClassName('photoZone')
+
+    drag.ondragstart = (event) => {
+      event.preventDefault()
+      console.log('drag start')
+      ipcRenderer.send('ondragstart', '/path/to/item')
+    }
+
+    drag.ondragover = () => {
+      return false
+    }
+    drag.ondragleave = () => {
+      return false
+    }
+    drag.ondragend = () => {
+      return false
+    }
+    drag.ondrop = (e) => {
+      e.preventDefault()
+
+      for(let f of e.dataTransfer.files) {
+        console.log('File(s) you dragged here: ', f.path)
+      }
+
+      return false
+    }
+    
   },
   beforeUpdate() {
     console.log('photozone Beforeupdated')
@@ -58,6 +86,14 @@ export default {
       'setCurrentIndex',
       'setIsVideo',
     ]),
+    myDrag() {
+      console.log('dgra')
+    },
+    myDrop(e) {
+      e.preventDefault();
+      console.log('drop')
+      console.log(e)
+    },
     capture() {
       var canvas = document.getElementById('canvas');
       var video = document.getElementById('video');
