@@ -2,7 +2,6 @@
   <div class="sidebarRightContainer">
     <a-row v-for="(destFolder, index) in destFolders" :key="index" class="destBtn">
       <div class="moveContainer">
-        <!-- TODO: hover, focus 시에 color 변경 -->
         <!-- <a-button @click="moveImage(destFolder)" v-html="destFolder.dirName" class="moveBtn" type="primary" size="large" /> -->
         <a-button @click="beforeMoveImage(destFolder)" v-html="destFolder.dirName" class="moveBtn" type="primary" size="large" />
         <span class="iconContainer">
@@ -15,9 +14,7 @@
       </div>
     </a-row>
     <a-row style="text-align: center">
-      <!-- TODO: src폴더 선택 전에는 Disable -->
-      <a-button @click="hanldeClickNewDir" size="small" type="primary">
-      <!-- <a-button @click="test" size="small" type="primary"> -->
+      <a-button :disabled="!srcSelected" @click="hanldeClickNewDir" size="small" type="primary">
         <a-icon type="plus-circle" />
         경로 추가
       </a-button>
@@ -64,6 +61,7 @@ export default {
       'currentIndex',
       'numberOfFiles_complete',
       'spinning',
+      'srcSelected',
     ])
   },
   data() {

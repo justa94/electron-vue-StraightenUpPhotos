@@ -15,11 +15,11 @@
       <h3 style="margin: auto 0; margin-right: 12%;" class="imageNameContainer">{{ imageNames[currentIndex] }}</h3>
     <!-- </div> -->
     
-    <h2 style="margin: auto 0;">
+    <h2 v-if="srcSelected" style="margin: auto 0;">
       <!-- <div style="font-size: 1rem">처리량</div>
       {{ numberOfFiles_complete }} / {{ numberOfFiles_origin }} -->
       <!-- TODO: 폴더 선택 안했을 경우는 안보이게 처리 -->
-      {{ currentIndex+1 }} / {{ remainFiles }}
+      {{ remainFiles !== 0 ? currentIndex+1 : 0 }} / {{ remainFiles }}
     </h2>
   </div>
 </template>
@@ -46,10 +46,9 @@ export default {
       'numberOfFiles_complete',
       'currentImagePath',
       'imageNames',
-    ]),
-    remainFiles() {
-      return this.numberOfFiles_origin - this.numberOfFiles_complete
-    }
+      'srcSelected',
+      'remainFiles',
+    ])
     // mapState 사용 안함
     // ...mapState({
     //   photo: state => state.Photo
@@ -74,6 +73,9 @@ export default {
       'setIsVideo',
     ]),
     checkIsVideo() {
+      if(this.remainFiles === 0) {
+        return;
+      }
       const currentImage = this.imageNames[this.currentIndex]
       const ext = path.extname(currentImage)
       if(ext === '.mp4') {
@@ -110,16 +112,6 @@ export default {
         '.ogv'
       ]
 
-      // 
-      console.log('-------------------------------------')
-      let test01 = '.mp4'
-      let test01_lodash = _.lowerCase(test01)
-      let test01_basic = test01.toLowerCase(test01)
-      console.log('test01_lodash', test01_lodash)
-      console.log('test01_basic', test01_basic)
-      console.log('-------------------------------------')
-      // 
-      
       files = files.filter((file) => {
         const ext = path.extname(file)
 

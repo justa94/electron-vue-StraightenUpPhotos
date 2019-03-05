@@ -1,7 +1,6 @@
 <template>
   <div class="sidebarLeft">
     <h2 style="text-align: center;">History <a-button @click="test">T</a-button></h2>
-    <!-- TODO: @media로 사이즈 줄어들면 안보이게하기 -->
     <div>
       <a-list
         :dataSource="history"

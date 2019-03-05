@@ -1,5 +1,4 @@
 /* eslint-disable */
-// TODO: Folder를 Directory로 바꿀까?
 const state = {
   currentImagePath: '', // 현재 이미지파일 경로
   imageNames: [], // 이미지 경로들
@@ -21,6 +20,7 @@ const getters = {
   destFolders: () => state.destFolders,
   numberOfFiles_origin: () => state.numberOfFiles_origin,
   numberOfFiles_complete: () => state.numberOfFiles_complete,
+  remainFiles: () => state.numberOfFiles_origin - state.numberOfFiles_complete,
   currentIndex: () => state.currentIndex,
   srcSelected: () => state.srcSelected,
   history: () => state.history,

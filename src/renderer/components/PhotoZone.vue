@@ -9,7 +9,7 @@
     </video>
     <div class="imgContainer" v-else>
     <!-- <div class="imgContainer"> -->
-      <img v-if="!srcSelected" src="https://via.placeholder.com/700x700" />
+      <img v-if="!srcSelected || remainFiles === 0" src="https://via.placeholder.com/700x700" />
       <img v-else :src="sourceFolderPath + '\\' + imageNames[currentIndex]" />
     </div>
     <!-- <a-button @click="capture">canvas</a-button> -->
@@ -34,6 +34,7 @@ export default {
       'currentIndex',
       'srcSelected',
       'isVideo',
+      'remainFiles',
     ]),
   },
   data() {
