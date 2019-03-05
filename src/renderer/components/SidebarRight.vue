@@ -166,13 +166,14 @@ export default {
       // 처리된 이미지 파일 갯수 증가
       this.setNumberOfFiles_complete(this.numberOfFiles_complete + 1)
 
-      // TODO: history에 추가
       this.pushHistory({
         srcPath,
         destPath,
         destFolderName: paramDestName,
         imageName
       })
+
+      // TODO: 마지막 파일 까지 이동했을 경우 처리해준다.
     },
     changePath(index) {
       const dirPath = this.openDialog()

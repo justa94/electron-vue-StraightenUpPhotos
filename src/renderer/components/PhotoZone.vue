@@ -4,14 +4,16 @@
       <img src="@/assets/image/prev.svg" class="direction" @click="imageBack" />
       <img src="@/assets/image/next.svg" class="direction" @click="imageFront" />
     </div>
-    <!-- <video controls="controls" width="100%" height="100%" v-if="isVideo">
-      <source src="@/assets/video/SampleVideo_1280x720_20mb.mp4" type="video/mp4" />
-    </video> -->
-    <!-- <div class="imgContainer" v-else> -->
-    <div class="imgContainer">
+    <video id="video" controls width="100%" height="100%" v-if="isVideo">
+      <source :src="sourceFolderPath + '\\' + imageNames[currentIndex]" type="video/mp4" />
+    </video>
+    <div class="imgContainer" v-else>
+    <!-- <div class="imgContainer"> -->
       <img v-if="!srcSelected" src="https://via.placeholder.com/700x700" />
       <img v-else :src="sourceFolderPath + '\\' + imageNames[currentIndex]" />
     </div>
+    <!-- <a-button @click="capture">canvas</a-button> -->
+    <!-- <canvas id="canvas"></canvas> -->
   </div>
 </template>
 
@@ -55,6 +57,14 @@ export default {
       'setCurrentIndex',
       'setIsVideo',
     ]),
+    capture() {
+      var canvas = document.getElementById('canvas');
+      var video = document.getElementById('video');
+      canvas.getContext('2d').drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+      // canvas.getContext('2d').drawImage(video, 0, 0, 1, 500);
+
+      console.log('canvas?', { canvas, video, width: video.videoWidth })
+    }, 
     checkIsVideo() {
       return
       const currentImage = this.imageNames[this.currentIndex]
@@ -95,6 +105,7 @@ export default {
 
   & > img {
     width: 100%;
+    height: 100%;
     max-width: 700px;
     max-height: 700px;
   }

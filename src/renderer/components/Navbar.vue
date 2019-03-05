@@ -18,6 +18,7 @@
     <h2 style="margin: auto 0;">
       <!-- <div style="font-size: 1rem">처리량</div>
       {{ numberOfFiles_complete }} / {{ numberOfFiles_origin }} -->
+      <!-- TODO: 폴더 선택 안했을 경우는 안보이게 처리 -->
       {{ currentIndex+1 }} / {{ remainFiles }}
     </h2>
   </div>

@@ -10,17 +10,25 @@
       >
         <a-list-item slot="renderItem" slot-scope="item, index">
           <!-- <a-list-item-meta :description="item.email"> -->
-          <a-list-item-meta>
+          <!-- <a-list-item-meta> -->
             <!-- <a slot="title" :href="item.href">{{item.name.last}}</a> -->
             <!-- <a-avatar slot="avatar" shape="square" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" /> -->
             
             <!-- <a-avatar slot="avatar" shape="square" :size="120" src="C:\Users\user\Desktop\workspace\prac\projects\electron\electron-vue-StraightenUpPhotos\src\renderer\assets\10000img\img\rimg4aea56.jpg" /> -->
-            <a-avatar slot="avatar" shape="square" :size="120" :src="item.destPath" />
-          </a-list-item-meta>
-          <div>
-            <div>--> {{ item.destFolderName }}</div>
-            <!-- <a-button @click="restore(item, index)" type="default">복원</a-button> -->
-            <a-button @click="beforeRestore(item, index)" type="default">복원</a-button>
+            <!-- <a-avatar slot="avatar" shape="square" :size="120" :src="item.destPath" /> -->
+          <!-- </a-list-item-meta> -->
+          <div class="listItem">
+            <!-- <video controls="controls" width="120px" height="100px" v-if="isVideo">
+              <source :src="item.destPath" type="video/mp4" />
+            </video> -->
+            <!-- <img v-else :src="item.destPath" width="120px" height="100px" /> -->
+            <!-- TODO: video면 섬네일 이미지 보이게하기 -->
+            <img :src="item.destPath" width="120px" height="100px" />
+            <div>
+              <div>--> {{ item.destFolderName }}</div>
+              <!-- <a-button @click="restore(item, index)" type="default">복원</a-button> -->
+              <a-button @click="beforeRestore(item, index)" type="default">복원</a-button>
+            </div>
           </div>
         </a-list-item>
       </a-list>
@@ -61,7 +69,8 @@ export default {
     ...mapGetters([
       'history',
       'imageNames',
-      'numberOfFiles_complete'
+      'numberOfFiles_complete',
+      'isVideo',
     ])
   },
   data() {
@@ -233,5 +242,10 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+.listItem {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
 </style>
