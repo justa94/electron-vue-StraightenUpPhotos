@@ -6,12 +6,12 @@
       <img src="@/assets/image/next.svg" class="direction" @click="imageFront" />
     </div>
     <video id="video" controls width="100%" height="100%" v-if="isVideo">
-      <source :src="sourceFolderPath + '\\' + imageNames[currentIndex]" type="video/mp4" />
+      <source :src="imageSrc" type="video/mp4" />
     </video>
     <div class="imgContainer" v-else>
     <!-- <div class="imgContainer"> -->
       <img v-if="!srcSelected || remainFiles === 0" src="https://via.placeholder.com/700x700" />
-      <img v-else :src="sourceFolderPath + '\\' + imageNames[currentIndex]" />
+      <img v-else :src="imageSrc" />
     </div>
     <!-- <a-button @click="capture">canvas</a-button> -->
     <!-- <canvas id="canvas"></canvas> -->
@@ -37,6 +37,9 @@ export default {
       'isVideo',
       'remainFiles',
     ]),
+    imageSrc() {
+      return this.sourceFolderPath + '\\' + this.imageNames[this.currentIndex]
+    }
   },
   data() {
     return {

@@ -89,8 +89,6 @@ export default {
       }
 
       // 해당 폴더 안의 모든 파일들 이름 배열에 담기
-      // TODO: 파일들 날짜순으로 정렬해서 넣을 순 없을까?
-      // TODO: 반응형으로 만들기위해서 사이즈 줄어들면 폴더 버튼이랑 수량표시 없애기
       let files = fs.readdirSync(dirPath[0])
 
       console.log('files', files)
@@ -121,6 +119,24 @@ export default {
         this.noti('warning', '이미지가 없는 폴더입니다.')
         return;
       }
+      console.log('sort path?', dirPath[0] + '\\' + files[0])
+
+      
+      
+      /* 
+      * 날짜순으로 정렬하기
+      * fs.statSync 사용
+      * atime: 엑세스시간
+      * ctime: 생성시간
+      * mtime: 수정시간
+      */
+      let sortPath = dirPath[0] + '\\';
+      files.sort((a, b) => {
+        let s1 = fs.statSync(sortPath + a)
+        let s2 = fs.statSync(sortPath + b)
+
+        return s2.mtime.getTime() - s1.mtime.getTime()
+      })
 
       // 스토어에 저장
       this.setSourceFolderPath(dirPath[0])
