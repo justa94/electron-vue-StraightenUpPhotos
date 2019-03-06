@@ -1,6 +1,6 @@
 <template>
   <div class="sidebarLeft">
-    <h2 style="text-align: center;">History <a-button @click="test">T</a-button></h2>
+    <h2 style="text-align: center;">History</h2>
     <div>
       <a-list
         :dataSource="history"
@@ -9,15 +9,14 @@
       >
         <a-list-item slot="renderItem" slot-scope="item, index">
           <div class="listItem">
-            <!-- <video controls="controls" width="120px" height="100px" v-if="isVideo">
+            <video controls="controls" width="120px" height="100px" v-if="item.isVideo">
               <source :src="item.destPath" type="video/mp4" />
-            </video> -->
-            <!-- <img v-else :src="item.destPath" width="120px" height="100px" /> -->
+            </video>
+            <img v-else :src="item.destPath" width="120px" height="100px" />
             <!-- TODO: video면 섬네일 이미지 보이게하기 -->
-            <img :src="item.destPath" width="120px" height="100px" />
+            <!-- <img :src="item.destPath" width="120px" height="100px" /> -->
             <div>
               <div>--> {{ item.destFolderName }}</div>
-              <!-- <a-button @click="restore(item, index)" type="default">복원</a-button> -->
               <a-button @click="beforeRestore(item, index)" type="default">복원</a-button>
             </div>
           </div>

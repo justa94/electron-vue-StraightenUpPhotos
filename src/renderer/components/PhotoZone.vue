@@ -5,22 +5,24 @@
       <img src="@/assets/image/prev.svg" class="direction" @click="imageBack" />
       <img src="@/assets/image/next.svg" class="direction" @click="imageFront" />
     </div>
-    <!-- <video id="video" controls width="100%" height="100%" v-if="isVideo">
+    {{ imageSrc }}
+    <!-- TODO: via.placeholder.com image 다운받아서 static에 넣기 -->
+    <video id="video" controls width="100%" height="100%" v-if="isVideo" class="photoZoneVideo">
       <source :src="imageSrc" type="video/mp4" />
     </video>
     <div class="imgContainer" v-else>
       <img v-if="!srcSelected || remainFiles === 0" src="https://via.placeholder.com/700x700" />
       <img v-else :src="imageSrc" />
-    </div> -->
+    </div>
 
-    <div class="multiImageContainer">
+    <!-- <div class="multiImageContainer">
       <a-row v-for="i in [1,2,3]" :key="i">
         <a-col v-for="j in [1,2,3]" :key="j" :span="8" class="multiImage">
-          <img v-if="!srcSelected || remainFiles === 0" src="https://via.placeholder.com/700x700" />
+          <img v-if="!srcSelected || remainFiles === 0" src="https://via.placeholder.com/250x250" />
           <img v-else :src="imageSrc" />
         </a-col>
       </a-row>
-    </div>
+    </div> -->
 
 
     <!-- <a-button @click="capture">canvas</a-button> -->
@@ -48,6 +50,7 @@ export default {
       'remainFiles',
     ]),
     imageSrc() {
+      console.log('imageSrc 변경')
       return this.sourceFolderPath + '\\' + this.imageNames[this.currentIndex]
     },
     multiImageSrc(num) {
@@ -62,12 +65,9 @@ export default {
   mounted() {
   },
   beforeUpdate() {
-    console.log('photozone Beforeupdated')
-    this.checkIsVideo()
   },
   updated() {
-    console.log('photozone updated')
-    this.checkIsVideo()
+    console.log('photoZone updated')
   },
   methods: {
     ...mapActions([
@@ -125,6 +125,12 @@ export default {
 <style scoped lang='scss'>
 .photoZone {
   // height: 100%;
+  .photoZoneVideo {
+    width: 100%;
+    height: 100%;
+    max-width: 1000px;
+    max-height: 700px;
+  }
 }
 .imgContainer {
   text-align: center;

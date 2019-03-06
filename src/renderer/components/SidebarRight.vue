@@ -62,6 +62,7 @@ export default {
       'numberOfFiles_complete',
       'spinning',
       'srcSelected',
+      'isVideo',
     ])
   },
   data() {
@@ -168,7 +169,8 @@ export default {
         srcPath,
         destPath,
         destFolderName: paramDestName,
-        imageName
+        imageName,
+        isVideo: this.isVideo
       })
     },
     changePath(index) {
