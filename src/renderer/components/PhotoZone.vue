@@ -5,14 +5,24 @@
       <img src="@/assets/image/prev.svg" class="direction" @click="imageBack" />
       <img src="@/assets/image/next.svg" class="direction" @click="imageFront" />
     </div>
-    <video id="video" controls width="100%" height="100%" v-if="isVideo">
+    <!-- <video id="video" controls width="100%" height="100%" v-if="isVideo">
       <source :src="imageSrc" type="video/mp4" />
     </video>
     <div class="imgContainer" v-else>
-    <!-- <div class="imgContainer"> -->
       <img v-if="!srcSelected || remainFiles === 0" src="https://via.placeholder.com/700x700" />
       <img v-else :src="imageSrc" />
+    </div> -->
+
+    <div class="multiImageContainer">
+      <a-row v-for="i in [1,2,3]" :key="i">
+        <a-col v-for="j in [1,2,3]" :key="j" :span="8" class="multiImage">
+          <img v-if="!srcSelected || remainFiles === 0" src="https://via.placeholder.com/700x700" />
+          <img v-else :src="imageSrc" />
+        </a-col>
+      </a-row>
     </div>
+
+
     <!-- <a-button @click="capture">canvas</a-button> -->
     <!-- <canvas id="canvas"></canvas> -->
   </div>
@@ -39,6 +49,9 @@ export default {
     ]),
     imageSrc() {
       return this.sourceFolderPath + '\\' + this.imageNames[this.currentIndex]
+    },
+    multiImageSrc(num) {
+      return this.sourceFolderPath + '\\' + this.imageNames[this.currentIndex+num]
     }
   },
   data() {
@@ -47,33 +60,6 @@ export default {
   },
   
   mounted() {
-    let drag = document.getElementsByClassName('photoZone')
-
-    drag.ondragstart = (event) => {
-      event.preventDefault()
-      console.log('drag start')
-      ipcRenderer.send('ondragstart', '/path/to/item')
-    }
-
-    drag.ondragover = () => {
-      return false
-    }
-    drag.ondragleave = () => {
-      return false
-    }
-    drag.ondragend = () => {
-      return false
-    }
-    drag.ondrop = (e) => {
-      e.preventDefault()
-
-      for(let f of e.dataTransfer.files) {
-        console.log('File(s) you dragged here: ', f.path)
-      }
-
-      return false
-    }
-    
   },
   beforeUpdate() {
     console.log('photozone Beforeupdated')
@@ -148,6 +134,22 @@ export default {
     height: 100%;
     max-width: 700px;
     max-height: 700px;
+  }
+}
+.multiImageContainer {
+  margin: auto;
+  display: table;
+
+  .multiImage {
+    // border: 1px solid black;
+    width: 250px;
+    height: 250px;
+
+    & > img {
+      border: 1px solid black;
+      width: 250px;
+      height: 250px;
+    }
   }
 }
 .imageBack {

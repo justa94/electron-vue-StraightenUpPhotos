@@ -8,14 +8,6 @@
         bordered
       >
         <a-list-item slot="renderItem" slot-scope="item, index">
-          <!-- <a-list-item-meta :description="item.email"> -->
-          <!-- <a-list-item-meta> -->
-            <!-- <a slot="title" :href="item.href">{{item.name.last}}</a> -->
-            <!-- <a-avatar slot="avatar" shape="square" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" /> -->
-            
-            <!-- <a-avatar slot="avatar" shape="square" :size="120" src="C:\Users\user\Desktop\workspace\prac\projects\electron\electron-vue-StraightenUpPhotos\src\renderer\assets\10000img\img\rimg4aea56.jpg" /> -->
-            <!-- <a-avatar slot="avatar" shape="square" :size="120" :src="item.destPath" /> -->
-          <!-- </a-list-item-meta> -->
           <div class="listItem">
             <!-- <video controls="controls" width="120px" height="100px" v-if="isVideo">
               <source :src="item.destPath" type="video/mp4" />
@@ -31,25 +23,6 @@
           </div>
         </a-list-item>
       </a-list>
-
-
-
-
-
-
-
-      <!-- <a-list
-        :dataSource="sample"
-        style="height: 800px; overflow: auto;"
-        bordered
-      >
-        <a-list-item slot="renderItem" slot-scope="item, index">
-          <a-list-item-meta :description="item.email">
-            <a slot="title" :href="item.href">{{item.name.last}}</a>
-            <a-avatar slot="avatar" shape="square" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-          </a-list-item-meta>
-        </a-list-item>
-      </a-list> -->
     </div>
   </div>
 </template>
@@ -74,104 +47,7 @@ export default {
   },
   data() {
     return {
-      sample: [
-        {
-          email: 'email A',
-          name: {
-            last: 'last A'
-          }
-        },
-        {
-          email: 'email B',
-          name: {
-            last: 'last B'
-          }
-        },
-        {
-          email: 'email B',
-          name: {
-            last: 'last B'
-          }
-        },
-        {
-          email: 'email B',
-          name: {
-            last: 'last B'
-          }
-        },
-        {
-          email: 'email B',
-          name: {
-            last: 'last B'
-          }
-        },
-        {
-          email: 'email B',
-          name: {
-            last: 'last B'
-          }
-        },
-        {
-          email: 'email B',
-          name: {
-            last: 'last B'
-          }
-        },
-        {
-          email: 'email B',
-          name: {
-            last: 'last B'
-          }
-        },
-        {
-          email: 'email B',
-          name: {
-            last: 'last B'
-          }
-        },
-        {
-          email: 'email B',
-          name: {
-            last: 'last B'
-          }
-        },
-        {
-          email: 'email B',
-          name: {
-            last: 'last B'
-          }
-        },
-        {
-          email: 'email B',
-          name: {
-            last: 'last B'
-          }
-        },
-        {
-          email: 'email B',
-          name: {
-            last: 'last B'
-          }
-        },
-        {
-          email: 'email B',
-          name: {
-            last: 'last B'
-          }
-        },
-        {
-          email: 'email B',
-          name: {
-            last: 'last B'
-          }
-        },
-        {
-          email: 'email B',
-          name: {
-            last: 'last B'
-          }
-        },
-      ],
+      
     }
   },
   methods: {
@@ -180,9 +56,6 @@ export default {
       'popHistory',
       'setSpinning',
     ]),
-    test() {
-      this.sample.pop();
-    },
     beforeRestore(item, index) {
       this.setSpinning(true)
       setTimeout(() => {
