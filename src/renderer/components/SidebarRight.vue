@@ -3,7 +3,7 @@
     <a-row v-for="(destFolder, index) in destFolders" :key="index" class="destBtn">
       <div class="moveContainer">
         <!-- <a-button @click="moveImage(destFolder)" v-html="destFolder.dirName" class="moveBtn" type="primary" size="large" /> -->
-        <a-button @click="beforeMoveImage(destFolder)" v-html="destFolder.dirName" class="moveBtn" type="primary" size="large" />
+        <a-button @click="beforeMoveImage(destFolder)" v-html="destFolder.dirName" :disabled="!srcSelected" class="moveBtn" type="primary" size="large" />
         <span class="iconContainer">
           <a-tag color="#2db7f5" @click="changePath(index)">변경</a-tag>
           <a-tag color="#f50" @click="removePath(index)">삭제</a-tag>
@@ -63,6 +63,8 @@ export default {
       'spinning',
       'srcSelected',
       'isVideo',
+      'viewMode',
+      'multiChecked',
     ])
   },
   data() {
@@ -82,6 +84,7 @@ export default {
       'popDestFolders',
       'pushHistory',
       'setSpinning',
+      'setMultiChecked',
     ]),
     test() {
       console.log('test in')
@@ -119,7 +122,9 @@ export default {
     beforeMoveImage(paramdestFolder) {
       this.setSpinning(true)
       setTimeout(() => {
-        this.moveImage(paramdestFolder)
+        if(this.viewMode === 'single') this.moveImage(paramdestFolder)
+        else this.moveImageMulti(paramdestFolder)
+
         this.setSpinning(false)
       }, 50);
     },
@@ -172,6 +177,79 @@ export default {
         imageName,
         isVideo: this.isVideo
       })
+    },
+    moveImageMulti(paramdestFolder) {
+      console.log('moveImageMulti')
+      // 예외처리
+      if(this.imageNames.length <= 0) {
+        this.noti('warning', 'src 폴더가 선택되지 않았습니다.')
+        return
+      }
+      if(this.multiChecked.length <= 0) {
+        this.noti('warning', '이미지를 선택하세요.')
+        return
+      }
+
+      const paramDestpath = paramdestFolder.dirPath
+      const paramDestName = paramdestFolder.dirName
+
+      const moveImageNames = [];
+      _.forEach(this.multiChecked, (index) => {
+        moveImageNames.push(this.imageNames[index])
+      })
+      // _.forEach(this.multiChecked, (index) => {
+      _.forEach(moveImageNames, (imageName) => {
+        // console.log('index?', index);
+        // const imageName = this.imageNames[index]
+        const srcPath = this.sourceFolderPath + '\\' + imageName
+        const destPath = paramDestpath + '\\' + imageName
+
+        // 파일 이동
+        try {
+          fs.renameSync(srcPath, destPath);
+          console.log('success!')
+        }
+        catch(e) {
+          console.error(e)
+          console.error('pbw try error')
+          this.noti('error', '에러!')
+          return
+        }
+
+        // 배열 갈아치운다.
+        const removeIndex = this.imageNames.indexOf(imageName);
+        if(removeIndex === -1) {
+          console.log('removeIndex가 -1이다. SidebarRight')
+          return;
+        }
+        this.imageNames.splice(removeIndex, 1);
+        // this.imageNames.splice(index, 1);
+
+        // 처리된 이미지 파일 갯수 증가
+        this.setNumberOfFiles_complete(this.numberOfFiles_complete + 1)
+
+        this.pushHistory({
+          srcPath,
+          destPath,
+          destFolderName: paramDestName,
+          imageName,
+          isVideo: this.isVideo
+        })
+      })
+
+      // 스핀 false
+      this.setSpinning(false)
+      // multiChecked reset
+      this.setMultiChecked({
+        mode: 'reset'
+      })
+
+      // TODO: 이미지 이동 후 overflow 처리
+      if(this.currentIndex >= this.imageNames.length-1) {
+        this.setCurrentIndex(this.imageNames.length-9);
+        console.log('배열길이 overflow')
+        return
+      }
     },
     changePath(index) {
       const dirPath = this.openDialog()

@@ -21,13 +21,27 @@
       </div>
     </div>
     <div class="multiImageContainer" v-else-if="viewMode === 'multi'">
+      <a-row v-for="i in [0,3,6]" :key="i">
+        <a-col v-for="j in [0,1,2]" :key="j" :span="8" class="multiImage">
+          <!-- <p v-if="j === 2" style="color: blue">cols {{ i+j+currentIndex }}</p> -->
+          <!-- <div v-if="isMultiChecked(i+j+currentIndex)" style="width:50px; height: 50px; background:red; z-index:30"></div> -->
+          <img src="@/assets/image/checked.svg" v-if="isMultiChecked(i+j+currentIndex)" @click="multiCheck(i+j+currentIndex)" class="checked" />
+          <img v-if="!srcSelected || remainFiles === 0 || multiImageSrc(i+j) === false" src="https://via.placeholder.com/250x250" />
+          <img v-else :src="multiImageSrc(i+j)" @click="multiCheck(i+j+currentIndex)" />
+          
+        </a-col>
+      </a-row>
+    </div>
+
+
+    <!-- <div class="multiImageContainer" v-else-if="viewMode === 'multi'">
       <a-row v-for="i in [1,2,3]" :key="i">
         <a-col v-for="j in [1,2,3]" :key="j" :span="8" class="multiImage">
           <img v-if="!srcSelected || remainFiles === 0" src="https://via.placeholder.com/250x250" />
           <img v-else :src="multiImageSrc(0)" />
         </a-col>
       </a-row>
-    </div>
+    </div> -->
 
 
     <!-- <a-button @click="capture">canvas</a-button> -->
@@ -54,6 +68,7 @@ export default {
       'isVideo',
       'remainFiles',
       'viewMode',
+      'multiChecked',
     ]),
     imageSrc() {
       console.log('imageSrc 변경')
@@ -62,7 +77,16 @@ export default {
     // multiImageSrc(num) {
     multiImageSrc() {
       // return this.sourceFolderPath + '\\' + this.imageNames[this.currentIndex+num]
-      return num => this.sourceFolderPath + '\\' + this.imageNames[this.currentIndex+num]
+      
+      // return num => this.sourceFolderPath + '\\' + this.imageNames[this.currentIndex+num]
+      return num => {
+        // console.log('multiImageSrc?', this.imageNames.length, this.currentIndex+num)
+        if(this.imageNames.length <= (this.currentIndex+num)) {
+          // overflow
+          return false
+        }
+        return this.sourceFolderPath + '\\' + this.imageNames[this.currentIndex+num]
+      }
     }
   },
   data() {
@@ -76,6 +100,7 @@ export default {
   },
   updated() {
     console.log('photoZone updated')
+
   },
   methods: {
     ...mapActions([
@@ -83,6 +108,7 @@ export default {
       'setCurrentIndex',
       'setIsVideo',
       'setViewMode',
+      'setMultiChecked',
     ]),
     myDrag() {
       console.log('dgra')
@@ -112,24 +138,80 @@ export default {
       }
     },
     imageBack() {
-      if(this.currentIndex < 1) {
-        console.log('배열 길이 underflow')
-        return
+      let currentIndex = this.currentIndex;
+
+      if(this.viewMode === 'single') {
+        if(currentIndex < 1) {
+          console.log('배열 길이 underflow')
+          return
+        }
+        currentIndex--;
       }
-      this.setCurrentIndex(this.currentIndex - 1)
+      else if(this.viewMode === 'multi') {
+        currentIndex = currentIndex - 9;
+        if(currentIndex < 0) {
+          console.log('배열 길이 underflow')
+          currentIndex = 0;
+        }
+      }
+      this.setCurrentIndex(currentIndex)
       this.checkIsVideo()
     },
     imageFront() {
-      if(this.currentIndex >= this.imageNames.length-1) {
-        console.log('배열길이 overflow')
-        return
+      let currentIndex = this.currentIndex;
+
+      if(this.viewMode === 'single') {
+        if(currentIndex >= this.imageNames.length-1) {
+          console.log('배열길이 overflow')
+          return
+        }
+        currentIndex++;
       }
-      this.setCurrentIndex(this.currentIndex + 1)
+      else if(this.viewMode === 'multi') {
+        currentIndex = currentIndex + 9;
+        if(currentIndex >= this.imageNames.length-1) {
+          console.log('배열길이 overflow')
+          return
+        }
+      }
+      this.setCurrentIndex(currentIndex)
       this.checkIsVideo()
     },
     onChangeMultiViewSwitch(e) {
       const viewMode = e ? 'multi' : 'single';
       this.setViewMode(viewMode)
+      // multiChecked reset
+      this.setMultiChecked({
+        mode: 'reset'
+      })
+    },
+    multiCheck(index) {
+      console.log('multiCheck', index)
+      // if(index in this.multiChecked) {
+      if(this.multiChecked.includes(index)) {
+        console.log('multiCheck in')
+        this.setMultiChecked({
+          index,
+          mode: 'remove'
+        })
+      }
+      else {
+        console.log('multiCheck else')
+        this.setMultiChecked({
+          index,
+          mode: 'add'
+        })
+      }
+    },
+    isMultiChecked(index) {
+      console.log('isMultiChecked', this.multiChecked)
+      console.log('isMultiChecked', typeof this.multiChecked)
+      if(this.multiChecked.includes(index)) {
+        return true
+      }
+      else {
+        return false
+      }
     }
   }
 }
@@ -168,6 +250,13 @@ export default {
       border: 1px solid black;
       width: 250px;
       height: 250px;
+    }
+
+    & > .checked {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
     }
   }
 }

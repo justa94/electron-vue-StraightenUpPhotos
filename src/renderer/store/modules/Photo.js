@@ -12,6 +12,7 @@ const state = {
   spinning: false, // 파일 이동중 spin
   isVideo: false,
   viewMode: 'single', // 보기 모드 (single, multi)
+  multiChecked: [], // 멀티체크된 인덱스
 }
 
 const getters = {
@@ -28,6 +29,7 @@ const getters = {
   spinning: () => state.spinning,
   isVideo: () => state.isVideo,
   viewMode: () => state.viewMode,
+  multiChecked: () => state.multiChecked,
 }
 
 const actions = {
@@ -78,6 +80,37 @@ const actions = {
   },
   setViewMode({ commit }, payload) {
     state.viewMode = payload
+  },
+  setMultiChecked({ commit }, payload) {
+    const { mode } = payload;
+
+    switch(mode) {
+      case 'reset':
+        (
+          console.log('reset')
+        )
+        state.multiChecked = [];
+        break;
+      case 'add':
+        (
+          console.log('add', payload)
+        )
+        state.multiChecked.push(payload.index)
+        break;
+      case 'remove':
+        (
+          console.log('remove', payload)
+        )
+        const removeIndex = state.multiChecked.indexOf(payload.index);
+        if(removeIndex === -1) {
+          console.log('리무브인덱스 -1')
+          break;
+        }
+        state.multiChecked.splice(removeIndex, 1)
+        break;
+      default:
+        break;
+    }
   },
 }
 
