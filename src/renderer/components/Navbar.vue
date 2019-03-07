@@ -97,9 +97,10 @@ export default {
         '.jpg',
         '.png',
         '.gif',
-        '.mp4',
-        '.webm',
-        '.ogv'
+        // 비디오까지 넣는건 구현이 힘들듯 하다.
+        // '.mp4',
+        // '.webm',
+        // '.ogv'
       ]
 
       files = files.filter((file) => {

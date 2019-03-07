@@ -28,7 +28,6 @@
           <img src="@/assets/image/checked.svg" v-if="isMultiChecked(i+j+currentIndex)" @click="multiCheck(i+j+currentIndex)" class="checked" />
           <img v-if="!srcSelected || remainFiles === 0 || multiImageSrc(i+j) === false" src="https://via.placeholder.com/250x250" />
           <img v-else :src="multiImageSrc(i+j)" @click="multiCheck(i+j+currentIndex)" />
-          
         </a-col>
       </a-row>
     </div>

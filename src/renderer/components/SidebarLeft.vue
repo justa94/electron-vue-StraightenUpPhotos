@@ -9,7 +9,7 @@
       >
         <a-list-item slot="renderItem" slot-scope="item, index">
           <div class="listItem">
-            <video controls="controls" width="120px" height="100px" v-if="item.isVideo">
+            <video width="120px" height="100px" v-if="item.isVideo">
               <source :src="item.destPath" type="video/mp4" />
             </video>
             <img v-else :src="item.destPath" width="120px" height="100px" />
