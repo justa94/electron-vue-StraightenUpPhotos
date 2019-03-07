@@ -132,13 +132,13 @@ export default {
       * mtime: 수정시간
       */
       // 개발용도로 임시적으로 주석처리
-      // let sortPath = dirPath[0] + '\\';
-      // files.sort((a, b) => {
-      //   let s1 = fs.statSync(sortPath + a)
-      //   let s2 = fs.statSync(sortPath + b)
+      let sortPath = dirPath[0] + '\\';
+      files.sort((a, b) => {
+        let s1 = fs.statSync(sortPath + a)
+        let s2 = fs.statSync(sortPath + b)
 
-      //   return s2.mtime.getTime() - s1.mtime.getTime()
-      // })
+        return s2.mtime.getTime() - s1.mtime.getTime()
+      })
 
       // 스토어에 저장
       this.setSourceFolderPath(dirPath[0])

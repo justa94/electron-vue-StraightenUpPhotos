@@ -2,7 +2,6 @@
   <div class="sidebarRightContainer">
     <a-row v-for="(destFolder, index) in destFolders" :key="index" class="destBtn">
       <div class="moveContainer">
-        <!-- <a-button @click="moveImage(destFolder)" v-html="destFolder.dirName" class="moveBtn" type="primary" size="large" /> -->
         <a-button @click="beforeMoveImage(destFolder)" v-html="destFolder.dirName" :disabled="!srcSelected" class="moveBtn" type="primary" size="large" />
         <span class="iconContainer">
           <a-tag color="#2db7f5" @click="changePath(index)">변경</a-tag>
@@ -21,21 +20,6 @@
     </a-row>
     <a-spin :spinning="sp">
     </a-spin>
-
-
-
-
-    <!-- <b-row v-for="(destFolder, index) in destFolders" :key="index" class="destBtn">
-      <div style="width: 100%">
-        <b-button @click="moveImage(destFolder.dirPath)" variant="primary" v-html="destFolder.dirName" />
-      </div>
-      <div style="width: 100%">
-        <span v-html="destFolder.dirPath" class="pathView" />
-      </div>
-    </b-row>
-    <b-row style="justify-content: center;">
-      <b-button @click="hanldeClickNewDir" variant="secondary" size="sm">경로 추가</b-button>
-    </b-row> -->
   </div>
 </template>
 
@@ -112,10 +96,10 @@ export default {
 
       // src 폴더랑 경로가 같으면 안됨
       // 개발용도로 일단 주석처리
-      // if(this.sourceFolderPath === dirPath) {
-      //   this.noti('warning', '경로가 같습니다')
-      //   return
-      // }
+      if(this.sourceFolderPath === dirPath) {
+        this.noti('warning', '경로가 같습니다')
+        return
+      }
 
       this.addDestFolders({dirPath, dirName})
     },
@@ -197,10 +181,7 @@ export default {
       _.forEach(this.multiChecked, (index) => {
         moveImageNames.push(this.imageNames[index])
       })
-      // _.forEach(this.multiChecked, (index) => {
       _.forEach(moveImageNames, (imageName) => {
-        // console.log('index?', index);
-        // const imageName = this.imageNames[index]
         const srcPath = this.sourceFolderPath + '\\' + imageName
         const destPath = paramDestpath + '\\' + imageName
 
@@ -223,7 +204,6 @@ export default {
           return;
         }
         this.imageNames.splice(removeIndex, 1);
-        // this.imageNames.splice(index, 1);
 
         // 처리된 이미지 파일 갯수 증가
         this.setNumberOfFiles_complete(this.numberOfFiles_complete + 1)

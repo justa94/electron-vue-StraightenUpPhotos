@@ -9,7 +9,6 @@
         <a-switch @change="onChangeMultiViewSwitch" />
       </span>
     </div>
-    {{ imageSrc }}
     <!-- TODO: via.placeholder.com image 다운받아서 static에 넣기 -->
     <div v-if="viewMode === 'single'">
       <video id="video" controls width="100%" height="100%" v-if="isVideo" class="photoZoneVideo">
@@ -23,25 +22,12 @@
     <div class="multiImageContainer" v-else-if="viewMode === 'multi'">
       <a-row v-for="i in [0,3,6]" :key="i">
         <a-col v-for="j in [0,1,2]" :key="j" :span="8" class="multiImage">
-          <!-- <p v-if="j === 2" style="color: blue">cols {{ i+j+currentIndex }}</p> -->
-          <!-- <div v-if="isMultiChecked(i+j+currentIndex)" style="width:50px; height: 50px; background:red; z-index:30"></div> -->
           <img src="@/assets/image/checked.svg" v-if="isMultiChecked(i+j+currentIndex)" @click="multiCheck(i+j+currentIndex)" class="checked" />
           <img v-if="!srcSelected || remainFiles === 0 || multiImageSrc(i+j) === false" src="https://via.placeholder.com/250x250" />
           <img v-else :src="multiImageSrc(i+j)" @click="multiCheck(i+j+currentIndex)" />
         </a-col>
       </a-row>
     </div>
-
-
-    <!-- <div class="multiImageContainer" v-else-if="viewMode === 'multi'">
-      <a-row v-for="i in [1,2,3]" :key="i">
-        <a-col v-for="j in [1,2,3]" :key="j" :span="8" class="multiImage">
-          <img v-if="!srcSelected || remainFiles === 0" src="https://via.placeholder.com/250x250" />
-          <img v-else :src="multiImageSrc(0)" />
-        </a-col>
-      </a-row>
-    </div> -->
-
 
     <!-- <a-button @click="capture">canvas</a-button> -->
     <!-- <canvas id="canvas"></canvas> -->
@@ -75,8 +61,6 @@ export default {
     },
     // multiImageSrc(num) {
     multiImageSrc() {
-      // return this.sourceFolderPath + '\\' + this.imageNames[this.currentIndex+num]
-      
       // return num => this.sourceFolderPath + '\\' + this.imageNames[this.currentIndex+num]
       return num => {
         // console.log('multiImageSrc?', this.imageNames.length, this.currentIndex+num)
