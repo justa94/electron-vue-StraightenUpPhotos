@@ -4,25 +4,30 @@
     <div class="directionContainer">
       <img src="@/assets/image/prev.svg" class="direction" @click="imageBack" />
       <img src="@/assets/image/next.svg" class="direction" @click="imageFront" />
+      <span class="viewSwitchContainer">
+        Multi View
+        <a-switch @change="onChangeMultiViewSwitch" />
+      </span>
     </div>
     {{ imageSrc }}
     <!-- TODO: via.placeholder.com image 다운받아서 static에 넣기 -->
-    <video id="video" controls width="100%" height="100%" v-if="isVideo" class="photoZoneVideo">
-      <source :src="imageSrc" type="video/mp4" />
-    </video>
-    <div class="imgContainer" v-else>
-      <img v-if="!srcSelected || remainFiles === 0" src="https://via.placeholder.com/700x700" />
-      <img v-else :src="imageSrc" />
+    <div v-if="viewMode === 'single'">
+      <video id="video" controls width="100%" height="100%" v-if="isVideo" class="photoZoneVideo">
+        <source :src="imageSrc" type="video/mp4" />
+      </video>
+      <div class="imgContainer" v-else>
+        <img v-if="!srcSelected || remainFiles === 0" src="https://via.placeholder.com/700x700" />
+        <img v-else :src="imageSrc" />
+      </div>
     </div>
-
-    <!-- <div class="multiImageContainer">
+    <div class="multiImageContainer" v-else-if="viewMode === 'multi'">
       <a-row v-for="i in [1,2,3]" :key="i">
         <a-col v-for="j in [1,2,3]" :key="j" :span="8" class="multiImage">
           <img v-if="!srcSelected || remainFiles === 0" src="https://via.placeholder.com/250x250" />
-          <img v-else :src="imageSrc" />
+          <img v-else :src="multiImageSrc(0)" />
         </a-col>
       </a-row>
-    </div> -->
+    </div>
 
 
     <!-- <a-button @click="capture">canvas</a-button> -->
@@ -48,13 +53,16 @@ export default {
       'srcSelected',
       'isVideo',
       'remainFiles',
+      'viewMode',
     ]),
     imageSrc() {
       console.log('imageSrc 변경')
       return this.sourceFolderPath + '\\' + this.imageNames[this.currentIndex]
     },
-    multiImageSrc(num) {
-      return this.sourceFolderPath + '\\' + this.imageNames[this.currentIndex+num]
+    // multiImageSrc(num) {
+    multiImageSrc() {
+      // return this.sourceFolderPath + '\\' + this.imageNames[this.currentIndex+num]
+      return num => this.sourceFolderPath + '\\' + this.imageNames[this.currentIndex+num]
     }
   },
   data() {
@@ -74,6 +82,7 @@ export default {
       'setCurrentImagePath',
       'setCurrentIndex',
       'setIsVideo',
+      'setViewMode',
     ]),
     myDrag() {
       console.log('dgra')
@@ -117,6 +126,10 @@ export default {
       }
       this.setCurrentIndex(this.currentIndex + 1)
       this.checkIsVideo()
+    },
+    onChangeMultiViewSwitch(e) {
+      const viewMode = e ? 'multi' : 'single';
+      this.setViewMode(viewMode)
     }
   }
 }
@@ -164,15 +177,22 @@ export default {
 .directionContainer {
   text-align: center;
   margin: 1rem 0;
-}
-.direction {
-  width: 12%;
-  max-width: 70px;
-  min-width: 30px;
-  cursor: pointer;
 
-  &:first-child {
-    margin-right: 3%;
+  .direction {
+    width: 12%;
+    max-width: 70px;
+    min-width: 30px;
+    cursor: pointer;
+
+    &:first-child {
+      margin-right: 3%;
+    }
+  }
+  .viewSwitchContainer {
+    float: right;
+    display: flex;
+    flex-direction: column;
   }
 }
+
 </style>

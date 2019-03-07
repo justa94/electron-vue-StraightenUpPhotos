@@ -11,6 +11,7 @@ const state = {
   history: [],
   spinning: false, // 파일 이동중 spin
   isVideo: false,
+  viewMode: 'single', // 보기 모드 (single, multi)
 }
 
 const getters = {
@@ -26,6 +27,7 @@ const getters = {
   history: () => state.history,
   spinning: () => state.spinning,
   isVideo: () => state.isVideo,
+  viewMode: () => state.viewMode,
 }
 
 const actions = {
@@ -73,6 +75,9 @@ const actions = {
   },
   setIsVideo({ commit }, payload) {
     state.isVideo = payload
+  },
+  setViewMode({ commit }, payload) {
+    state.viewMode = payload
   },
 }
 
