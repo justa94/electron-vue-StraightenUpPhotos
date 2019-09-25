@@ -14,3 +14,4 @@ src/renderer/assets/10000img/*
 # pbw
 preset
 package-lock.json
+.vscode
