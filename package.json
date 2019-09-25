@@ -1,9 +1,9 @@
 {
-  "name": "StraightenUpPhotos",
+  "name": "ArrangementPhotos",
   "version": "0.0.1",
   "author": "bwpark <bwpark@dgexcrypto.io>",
   "description": "An electron-vue project",
-  "license": null,
+  "license": "MIT",
   "main": "./dist/electron/main.js",
   "scripts": {
     "build": "node .electron-vue/build.js && electron-builder",
@@ -22,8 +22,8 @@
     "postinstall": "npm run lint:fix"
   },
   "build": {
-    "productName": "StraightenUpPhotos",
-    "appId": "com.example.yourapp",
+    "productName": "ArrangementPhotos",
+    "appId": "com.ZungTa.ArrangementPhotos",
     "directories": {
       "output": "build"
     },
@@ -49,10 +49,14 @@
       "icon": "build/icons/icon.icns"
     },
     "win": {
-      "icon": "build/icons/icon.ico"
+      "icon": "build/icons/icon.ico",
+      "target": ["portable"]
     },
     "linux": {
       "icon": "build/icons"
+    },
+    "portable": {
+      "artifactName": "ArrangementPhotos.exe"
     }
   },
   "dependencies": {

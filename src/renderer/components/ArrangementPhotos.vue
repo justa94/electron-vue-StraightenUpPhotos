@@ -39,7 +39,7 @@ import PhotoZone from '@/components/PhotoZone'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
-  name: 'StraightenUpPhotos',
+  name: 'ArrangementPhotos',
   components: {
     Navbar,
     SidebarLeft,

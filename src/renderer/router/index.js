@@ -7,8 +7,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'StraightenUpPhotos',
-      component: require('@/components/StraightenUpPhotos').default
+      name: 'ArrangementPhotos',
+      component: require('@/components/ArrangementPhotos').default
     },
     {
       path: '*',
