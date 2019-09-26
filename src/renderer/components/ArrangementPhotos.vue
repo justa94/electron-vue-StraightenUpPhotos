@@ -2,9 +2,6 @@
   <div>
     <a-spin size="large" :spinning="spinning">
       <Navbar />
-      <div>
-        {{this.myPath}}
-      </div>
       <a-row type="flex" justify="space-between" :gutter="0" class="photoContent">
         <a-col :span="5" class="col-SidebarLeft">
           <SidebarLeft />
