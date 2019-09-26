@@ -2,6 +2,9 @@
   <div>
     <a-spin size="large" :spinning="spinning">
       <Navbar />
+      <div>
+        {{this.myPath}}
+      </div>
       <a-row type="flex" justify="space-between" :gutter="0" class="photoContent">
         <a-col :span="5" class="col-SidebarLeft">
           <SidebarLeft />
@@ -32,6 +35,7 @@
 </template>
 
 <script>
+import path from 'path'
 import Navbar from '@/components/Navbar'
 import SidebarLeft from '@/components/SidebarLeft'
 import SidebarRight from '@/components/SidebarRight'
@@ -60,12 +64,18 @@ export default {
   updated() {
     console.log('updated', this.spinning)
   },
+  mounted() {
+    this.init();
+  },
   data() {
     return {
-      
+      myPath: '',
     }
   },
   methods: {
+    init() {
+      this.myPath = path.resolve(__dirname);
+    },
     incre() {
       // this.$store.Counter.dispatch('someAsyncTask')
       console.dir(this.$store)

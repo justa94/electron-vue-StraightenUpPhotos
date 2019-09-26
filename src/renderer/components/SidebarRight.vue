@@ -1,5 +1,21 @@
 <template>
   <div class="sidebarRightContainer">
+    <a-row class="preset-wrapper">
+      <!-- <a-upload 
+        name="loadPreset" 
+        :multiple="false" 
+        @change="loadPresetChange"
+        :showUploadList="false"
+        > -->
+
+        <a-button size="small" @click="loadPreset">
+          프리셋 불러오기
+        </a-button>
+      <!-- </a-upload> -->
+      <a-button size="small" @click="savePreset">
+        프리셋 저장
+      </a-button>
+    </a-row>
     <a-row v-for="(destFolder, index) in destFolders" :key="index" class="destBtn">
       <div class="moveContainer">
         <a-button @click="beforeMoveImage(destFolder)" v-html="destFolder.dirName" :disabled="!srcSelected" class="moveBtn" type="primary" size="large" />
@@ -65,6 +81,7 @@ export default {
       'setCurrentIndex',
       'setNumberOfFiles_complete',
       'changeDestFolders',
+      'changeAllDestFolders',
       'popDestFolders',
       'pushHistory',
       'setSpinning',
@@ -233,6 +250,9 @@ export default {
     },
     changePath(index) {
       const dirPath = this.openDialog()
+      if (!dirPath) {
+        return;
+      }
       const dirName = path.basename(dirPath)
 
       const payload = {
@@ -252,6 +272,56 @@ export default {
       // TODO: 제거하기전에 confirm하기
       /* antd에서 popconfirm, modal등이 동작하지 않음.
          bootstrap꺼는 잘 동작한다.. */
+    },
+    loadPreset() {
+      console.log('loadPreset()')
+      
+      const filePath = this.openFileDialog()
+      console.log(filePath)
+      if (!filePath) {
+        return;
+      }
+
+      fs.readFile(filePath, (err, data) => {
+        if (err) {
+          console.error(err);
+          this.noti('파일 불러오기중 에러 발생');
+          throw err;
+        }
+        if (!this.isJsonPresetString(data)) {
+          this.noti('유효한 프리셋 파일이 아닙니다.');
+          return;
+        }
+        data = JSON.parse(data);
+        this.changeAllDestFolders({ data });
+      });
+
+      // TODO: 유효성 검사
+    },
+    // loadPresetChange(info) {
+    //   console.log('loadPresetChange()')
+    //   console.log(info)
+
+    // },
+    savePreset() {
+      console.log('savePreset()')
+      console.log(this.destFolders)
+      console.log(JSON.stringify(this.destFolders, null, 2))
+      const preset = JSON.stringify(this.destFolders, null, 2) // JSON pretty
+
+      const filePath = this.openSavePresetDialog();
+      console.log('filePath? ', filePath);
+      if (!filePath) {
+        return;
+      }
+
+      fs.writeFileSync(filePath, preset, (error) => {
+        if (error) {
+          console.error(error);
+          this.noti('파일 저장중 에러 발생');
+        }
+      });
+      
     }
   }
 }
@@ -263,6 +333,10 @@ export default {
 }
 .sidebarRightContainer {
   padding: 50px 20px;
+
+  .preset-wrapper {
+    margin-bottom: 1rem;
+  }
 }
 .destBtn {
   margin-bottom: 20px;

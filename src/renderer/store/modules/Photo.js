@@ -51,6 +51,9 @@ const actions = {
     state.destFolders.splice(payload.index, 1, payload.data);
     // state.destFolders[payload.index] = payload.data
   },
+  changeAllDestFolders({ commit }, payload) {
+    state.destFolders = payload.data;
+  },
   popDestFolders({ commit }, index) {
     state.destFolders.splice(index, 1)
   },
