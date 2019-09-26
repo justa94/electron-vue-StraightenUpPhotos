@@ -75,6 +75,9 @@ const actions = {
   popHistory({ commit }, index) {
     state.history.splice(index, 1)
   },
+  cleanHistory({ commit }, payload) {
+    state.history = [];
+  },
   setSpinning({ commit }, payload) {
     state.spinning = payload
   },

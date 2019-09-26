@@ -1,6 +1,16 @@
 <template>
   <div class="sidebarLeft">
-    <h2 style="text-align: center;">History</h2>
+    <div class="historyWrapper">
+      <h2 class="title">History</h2>
+      <a-popconfirm
+        title="히스토리를 비우시겠습니까?"
+        @confirm="confirmCleanHistory"
+        okText="Yes"
+        cancelText="No"
+      >
+      <a-button class="cleanButton">비우기</a-button>
+      </a-popconfirm>
+    </div>
     <div>
       <a-list
         :dataSource="history"
@@ -53,6 +63,7 @@ export default {
       'setNumberOfFiles_complete',
       'popHistory',
       'setSpinning',
+      'cleanHistory',
     ]),
     beforeRestore(item, index) {
       this.setSpinning(true)
@@ -108,14 +119,28 @@ export default {
       }
       
     },
+    confirmCleanHistory() {
+      console.log('cleanHistory()');
+      this.cleanHistory();
+    }
   }
 }
 </script>
 
 <style scoped lang="scss">
-.listItem {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
+.sidebarLeft {
+  .historyWrapper {
+    .title {
+      text-align: center;
+    }
+    .cleanButton {
+      margin-left: 1rem;
+    }
+  }
+  .listItem {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+  }
 }
 </style>
