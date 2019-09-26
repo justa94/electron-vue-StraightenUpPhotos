@@ -16,6 +16,7 @@
         :dataSource="history"
         style="height: 800px; overflow: auto;"
         bordered
+        id="historyList"
       >
         <a-list-item slot="renderItem" slot-scope="item, index">
           <div class="listItem">
@@ -55,8 +56,18 @@ export default {
   },
   data() {
     return {
-      
+      historyLength: 0,
     }
+  },
+  updated() {
+    this.$nextTick(() => {
+      if (this.historyLength >= this.history.length) {
+        // 복원 한 것
+        return;
+      }
+      this.scrollToBottom();
+      this.historyLength = this.history.length;
+    })
   },
   methods: {
     ...mapActions([
@@ -122,6 +133,13 @@ export default {
     confirmCleanHistory() {
       console.log('cleanHistory()');
       this.cleanHistory();
+    },
+    scrollToBottom() {
+      console.log('scrollToBottom()');
+      const historyListElem = document.getElementById('historyList');
+      historyListElem.scrollTo({
+        top: historyListElem.scrollHeight
+      })
     }
   }
 }
